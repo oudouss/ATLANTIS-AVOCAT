@@ -21,12 +21,12 @@
 
 
     <!-- App CSS -->
-    <link rel="stylesheet" href="{{ voyager_asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset(voyager_asset('css/app.css')) }}">
 
 
     @if(__('voyager::generic.is_rtl') == 'true')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.css">
-    <link rel="stylesheet" href="{{ voyager_asset('css/rtl.css') }}">
+    <link rel="stylesheet" href="{{ asset(voyager_asset('css/rtl.css')) }}">
     @endif
 
     <!-- Few Dynamic Styles -->
@@ -99,9 +99,9 @@
     <div id="voyager-loader">
         <?php $admin_loader_img = Voyager::setting('admin.loader', ''); ?>
         @if($admin_loader_img == '')
-        <img src="{{ voyager_asset('images/logo-icon.png') }}" alt="Voyager Loader">
+        <img src="{{ asset(voyager_asset('images/logo-icon.png')) }}" alt="Voyager Loader">
         @else
-        <img src="{{ Voyager::image($admin_loader_img) }}" alt="Voyager Loader">
+        <img src="{{ asset(Voyager::image($admin_loader_img)( }}" alt="Voyager Loader">
         @endif
     </div>
 

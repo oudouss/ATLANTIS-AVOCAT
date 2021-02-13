@@ -11,19 +11,19 @@
         <!-- Favicon -->
     <?php $admin_favicon = Voyager::setting('admin.icon_image', ''); ?>
     @if($admin_favicon == '')
-        <link rel="shortcut icon" href="{{ voyager_asset('images/logo-icon.png') }}" type="image/png">
+        <link rel="shortcut icon" href="{{ asset(voyager_asset('images/logo-icon.png')) }}" type="image/png">
     @else
-        <link rel="shortcut icon" href="{{ Voyager::image($admin_favicon) }}" type="image/png">
+        <link rel="shortcut icon" href="{{ asset(Voyager::image($admin_favicon)) }}" type="image/png">
     @endif
     
-    <link rel="stylesheet" href="{{ voyager_asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset(voyager_asset('css/app.css')) }}">
     @if (__('voyager::generic.is_rtl') == 'true')
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl/3.4.0/css/bootstrap-rtl.css">
-        <link rel="stylesheet" href="{{ voyager_asset('css/rtl.css') }}">
+        <link rel="stylesheet" href="{{ asset(voyager_asset('css/rtl.css')) }}">
     @endif
     <style>
         body {
-            background-image:url('{{ Voyager::image( Voyager::setting("admin.bg_image"), voyager_asset("images/bg.jpg") ) }}');
+            background-image:url('{{ asset(Voyager::image( Voyager::setting("admin.bg_image"))), asset(voyager_asset("images/bg.jpg") ) }}');
             background-color: {{ Voyager::setting("admin.bg_color", "#FFFFFF" ) }};
         }
         body.login .login-sidebar {
