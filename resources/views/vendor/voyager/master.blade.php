@@ -101,7 +101,7 @@
         @if($admin_loader_img == '')
         <img src="{{ asset(voyager_asset('images/logo-icon.png')) }}" alt="Voyager Loader">
         @else
-        <img src="{{ asset(Voyager::image($admin_loader_img)( }}" alt="Voyager Loader">
+        <img src="{{ asset(Voyager::image($admin_loader_img)) }}" alt="Voyager Loader">
         @endif
     </div>
 
