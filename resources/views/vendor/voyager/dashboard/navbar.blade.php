@@ -11,9 +11,8 @@
                 $segments = array_filter(explode('/', str_replace(route('voyager.dashboard'), '', Request::url())));
                 $url = route('voyager.dashboard');
                 @endphp
-                    <!-- <li class="active"><i class="voyager-dashboard"></i> {{ __('voyager::generic.dashboard') }}</li> -->
                        <li class="active">
-                        <a href="{{ route('voyager.dashboard')}}"><i class="voyager-dashboard"></i> {{ __('voyager::generic.dashboard') }}</a>
+                        <a target="_blank" href="{{ route('voyager.dashboard')}}"><i class="voyager-dashboard"></i> {{ __('voyager::generic.dashboard') }}</a>
                        </li>
                 <!-- @if(count($segments) == 0)
                     <li class="active"><i class="voyager-dashboard"></i> {{ __('voyager::generic.dashboard') }}</li>
