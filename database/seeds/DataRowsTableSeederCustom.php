@@ -255,7 +255,7 @@ class DataRowsTableSeederCustom extends Seeder
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'text',
-                'display_name' => 'Téléphhone',
+                'display_name' => 'Téléphone',
                 'required'     => 0,
                 'browse'       => 1,
                 'read'         => 1,
