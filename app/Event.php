@@ -7,17 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    protected $guarded = [];
+  protected $guarded = [];
 
 
-    public function user()
-    {
-      return $this->belongsTo('App\User');
+  public function user()
+  {
+    return $this->belongsTo('App\User');
+  }
+  public function users()
+  {
+    return $this->belongsToMany('App\User');
+  }
+
+  public function scopeCurrentUser($query)
+  {
+    $myEvent = Auth::user()->events;
+    $eventShared = Auth::user()->sharedevents;
+    if ($eventShared->isNotEmpty()) {
+      $myEvent = $myEvent->merge($eventShared);
+      $myEvent->all();
     }
-    public function users()
-    {
-      return $this->belongsToMany('App\User');
-    }
-
-
+    return $query->whereIn('id', $myEvent->pluck('id'));
+  }
 }

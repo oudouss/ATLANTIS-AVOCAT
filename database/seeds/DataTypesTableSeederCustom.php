@@ -128,7 +128,7 @@ class DataTypesTableSeederCustom extends Seeder
                 'display_name_plural'   => 'Calendrier',
                 'icon'                  => 'voyager-calendar',
                 'model_name'            => 'App\Event',
-                'policy_name'           => null,
+                'policy_name'           => 'App\Policies\EventPolicy',
                 'controller'            => null,
                 'description'           => null,
                 'generate_permissions'  => 1,

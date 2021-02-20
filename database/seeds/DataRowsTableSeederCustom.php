@@ -1378,6 +1378,33 @@ class DataRowsTableSeederCustom extends Seeder
                 'order'        => 10,
             ])->save();
         }
+        $dataRow = $this->dataRow($affaireDataType, 'event_belongstomany_user_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'relationship',
+                'display_name' => 'Utilisateurs',
+                'required' => 0,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 1,
+                'add' => 1,
+                'delete' => 0,
+                'details' => [
+                    "scope" => "access",
+                    "model" => "App\\User",
+                    "table" => "users",
+                    "type" => "belongsToMany",
+                    "column" => "id",
+                    "key" => "id",
+                    "label" => "name",
+                    "pivot_table" => "event_user",
+                    "pivot" => "1",
+                    "taggable" => "0",
+                ],
+                'order' => 1,
+            ])->save();
+        }
+
         /*
         |--------------------------------------------------------------------------
         | Permissions

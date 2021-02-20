@@ -59,8 +59,8 @@ class UsersTableSeederCustom extends Seeder
             $role = Role::where('name', 'Client')->firstOrFail();
 
             User::create([
-                'name'           => 'Client 1',
-                'email'          => 'client1@app.com',
+                'name'           => 'Client Test',
+                'email'          => 'client-test@app.com',
                 'avatar'         => 'users\September2020\XhlcbhGlETcrwpTXkShF.png',
                 'password'       => bcrypt('password'),
                 'locale'       => 'fr',
