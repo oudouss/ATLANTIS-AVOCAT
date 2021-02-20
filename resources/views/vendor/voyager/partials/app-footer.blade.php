@@ -3,7 +3,7 @@
         @if (rand(1,100) == 100)
             <i class="voyager-rum-1"></i> {{ __('voyager::theme.footer_copyright2') }}
         @else
-            {!! __('voyager::theme.footer_copyright') !!} <a href="http://gss-groupe.com" target="_blank">GSS Groupe</a>
+            {!! __('voyager::theme.footer_copyright') !!} <a href="http://perfexium.ma" target="_blank">PERFEXIUM</a>
         @endif
     </div>
 </footer>
