@@ -14,14 +14,14 @@ class SettingsTableSeederCustom extends Seeder
         $setting = $this->findSetting('site.title');
         if ($setting->exists) {
             $setting->fill([
-                'value'        => 'ATLANTIS',
+                'value'        => 'ATLANTIS | AVOCAT',
             ])->update();
         }
 
         $setting = $this->findSetting('site.description');
         if ($setting->exists) {
             $setting->fill([
-                'value'        => 'Cabinet Avocat | Bienvenue.',
+                'value'        => 'Cabinet ZAOUI | Bienvenue.',
             ])->update();
         }
 
@@ -42,14 +42,14 @@ class SettingsTableSeederCustom extends Seeder
         $setting = $this->findSetting('admin.title');
         if ($setting->exists) {
             $setting->fill([
-                'value'        => 'ATLANTIS',
+                'value'        => 'ATLANTIS | AVOCAT',
             ])->update();
         }
 
         $setting = $this->findSetting('admin.description');
         if ($setting->exists) {
             $setting->fill([
-                'value'        => 'Cabinet Avocat | Bienvenue.',
+                'value'        => 'Cabinet ZAOUI | Bienvenue.',
             ])->update();
         }
     }
