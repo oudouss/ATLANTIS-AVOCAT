@@ -752,7 +752,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'browse'       => 0,
                 'read'         => 0,
                 'edit'         => 1,
-                'add'          => 1,
+                'add'          => 0,
                 'delete'       => 0,
                 'details'      => [
                     "scope"         => "client",
@@ -1378,7 +1378,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'order'        => 10,
             ])->save();
         }
-        $dataRow = $this->dataRow($affaireDataType, 'event_belongstomany_user_relationship');
+        $dataRow = $this->dataRow($eventDataType, 'event_belongstomany_user_relationship');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type' => 'relationship',
@@ -1401,7 +1401,7 @@ class DataRowsTableSeederCustom extends Seeder
                     "pivot" => "1",
                     "taggable" => "0",
                 ],
-                'order' => 1,
+                'order' => 11,
             ])->save();
         }
 
