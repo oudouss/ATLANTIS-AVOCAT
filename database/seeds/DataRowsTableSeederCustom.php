@@ -541,7 +541,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'delete'       => 1,
                 'details'      => [
                     "validation" => [
-                        "rule" => "unique:lawsuits,caseNum",
+                        "rule" => "unique:lawsuits,fileNum",
                         "edit" => [
                             "rule" => "nullable"
                         ],
