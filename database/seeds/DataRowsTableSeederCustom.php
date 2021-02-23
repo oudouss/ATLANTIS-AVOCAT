@@ -571,8 +571,9 @@ class DataRowsTableSeederCustom extends Seeder
                     "default" => "option1",
                     "options" => [
                     "option1" => "En-Cours",
-                    "option2" => "Classée",
-                    "option3" => "Archivée",
+                    "option2" => "Suspendue",
+                    "option3" => "Classée",
+                    "option4" => "Archivée",
                     ],
                 ],
                 'order'        => 11,
@@ -1386,7 +1387,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'browse' => 0,
                 'read' => 0,
                 'edit' => 1,
-                'add' => 1,
+                'add' => 0,
                 'delete' => 0,
                 'details' => [
                     "scope" => "access",
