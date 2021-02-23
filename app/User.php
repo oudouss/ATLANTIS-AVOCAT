@@ -66,7 +66,7 @@ class User extends \TCG\Voyager\Models\User
         $rolesCabinet = Role::where('name', 'Avocat')->orWhere('name', 'Cabinet')->pluck('id')->toArray();
         
         if (in_array(Auth::user()->role_id, $rolesCabinet)) {
-            $rolesAcc = Role::where('name', 'Avocat')->orWhere('name', 'Cabinet')->orWhere('name', 'Client')->pluck('id')->toArray();
+            $rolesAcc = Role::where('name', 'Avocat')->orWhere('name', 'Cabinet')->orWhere('name', 'Client')->orWhere('name', 'Expert')->orWhere('name', 'Huissier')->pluck('id')->toArray();
             return $query->whereIn('role_id', $rolesAcc);
 
         }elseif(Auth::user()->role_id == $roleClient->id){

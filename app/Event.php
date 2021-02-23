@@ -18,6 +18,10 @@ class Event extends Model
   {
     return $this->belongsToMany('App\User');
   }
+  public function lawsuit()
+  {
+      return $this->belongsTo('App\Lawsuit');
+  }
 
   public function scopeCurrentUser($query)
   {

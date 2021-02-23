@@ -38,6 +38,10 @@ class Lawsuit extends Model
     {
         return $this->hasMany('App\Attachement');
     }
+    public function events()
+    {
+        return $this->hasMany('App\Event');
+    }
 
     public function getNameAttribute()
     {
@@ -163,6 +167,7 @@ class Lawsuit extends Model
                         'end_date' => Carbon::parse($deadlines['option' . $i])->addHour()->toDateTimeString(),
                         'background_color' => $c,
                         'user_id' => 1,
+                        'lawsuit_id'=> $lawsuit->id,
                     ]);
                     $eventIds->push($event->id);
                 }

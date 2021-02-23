@@ -1237,6 +1237,21 @@ class DataRowsTableSeederCustom extends Seeder
                 'order'        => 2,
             ])->save();
         }
+        $dataRow = $this->dataRow($eventDataType, 'lawsuit_id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'text',
+                'display_name' => 'Affaire',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 13,
+            ])->save();
+        }
         $dataRow = $this->dataRow($eventDataType, 'title');
         if (!$dataRow->exists) {
             $dataRow->fill([
@@ -1404,6 +1419,33 @@ class DataRowsTableSeederCustom extends Seeder
                 'order' => 11,
             ])->save();
         }
+        $dataRow = $this->dataRow($eventDataType, 'event_belongsto_lawsuit_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type' => 'relationship',
+                'display_name' => 'Affaire',
+                'required' => 0,
+                'browse' => 0,
+                'read' => 0,
+                'edit' => 1,
+                'add' => 0,
+                'delete' => 0,
+                'details' => [
+                    "scope" => "currentUser",
+                    "model" => "App\\Lawsuit",
+                    "table" => "lawsuits",
+                    "type" => "belongsTo",
+                    "column" => "lawsuit_id",
+                    "key" => "id",
+                    "label" => "name",
+                    "pivot_table" => "attachements",
+                    "pivot" => "0",
+                    "taggable" => "0",
+                ],
+                'order' => 12,
+            ])->save();
+        }
+
 
         /*
         |--------------------------------------------------------------------------
