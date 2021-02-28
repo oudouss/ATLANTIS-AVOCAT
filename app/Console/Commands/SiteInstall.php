@@ -60,10 +60,11 @@ class SiteInstall extends Command
         }
 
         
+        
+        File::copyDirectory(public_path('img/siteimages/settings'), storage_path('app/settings'));
+        File::copyDirectory(public_path('img/siteimages/users'), storage_path('app/users'));
+        
         $this->callSilent('storage:link');
-
-        File::copyDirectory(public_path('img/siteimages/settings'), public_path('storage/settings'));
-        File::copyDirectory(public_path('img/siteimages/users'), public_path('storage/users'));
 
         $this->info('Migrating the database tables');
 
