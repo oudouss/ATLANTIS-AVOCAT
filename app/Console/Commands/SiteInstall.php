@@ -55,6 +55,7 @@ class SiteInstall extends Command
         try {
             File::deleteDirectory(public_path('storage/settings'));
             File::deleteDirectory(public_path('storage/users'));
+            File::deleteDirectory(public_path('storage'));
 
         } catch (\Exception $e) {
             $this->error('storage symlink directory NOT deleted.');
@@ -64,7 +65,7 @@ class SiteInstall extends Command
 
         $copySettingsSuccess = File::copyDirectory(public_path('img/siteimages/settings'), public_path('storage/settings'));
         if ($copySettingsSuccess) {
-            $this->info('settings successfully copied to storage folder.');
+            $this->info('settings images successfully copied to storage folder.');
         }
 
         
