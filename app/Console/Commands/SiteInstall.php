@@ -53,18 +53,23 @@ class SiteInstall extends Command
         $this->info('Publishing site assets and config files');
 
         try {
-            File::deleteDirectory(public_path('storage'));
+            File::deleteDirectory(public_path('storage/settings'));
+            File::deleteDirectory(public_path('storage/users'));
 
         } catch (\Exception $e) {
             $this->error('storage symlink directory NOT deleted.');
         }
-
-        
-        
-        File::copyDirectory(public_path('img/siteimages/settings'), storage_path('app/settings'));
-        File::copyDirectory(public_path('img/siteimages/users'), storage_path('app/users'));
         
         $this->callSilent('storage:link');
+
+        $copySettingsSuccess = File::copyDirectory(public_path('img/siteimages/settings'), public_path('storage/settings'));
+        if ($copySettingsSuccess) {
+            $this->info('settings successfully copied to storage folder.');
+        }
+
+        
+        File::copyDirectory(public_path('img/siteimages/users'), public_path('storage/users'));
+        
 
         $this->info('Migrating the database tables');
 
