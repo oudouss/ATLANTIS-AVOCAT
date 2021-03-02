@@ -62,7 +62,7 @@ class UsersTableSeederCustom extends Seeder
                 'name'           => 'Client Test',
                 'email'          => 'client-test@app.com',
                 'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
-                'password'       => bcrypt('password'),
+                'password'       => bcrypt('password2021**'),
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
             ]);
