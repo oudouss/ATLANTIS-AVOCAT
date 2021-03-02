@@ -28,14 +28,14 @@ class SettingsTableSeederCustom extends Seeder
         $setting = $this->findSetting('site.logo');
         if ($setting->exists) {
             $setting->fill([
-                'value'        => 'settings\August2020\QvvuRcQFlisx2mms250j.png',
+                'value'        => 'settings/August2020/QvvuRcQFlisx2mms250j.png',
             ])->update();
         }
 
         $setting = $this->findSetting('admin.bg_image');
         if ($setting->exists) {
             $setting->fill([
-                'value'        => 'settings\September2020\Z5Upg8aSnK7yi63P4UYW.png',
+                'value'        => 'settings/September2020/Z5Upg8aSnK7yi63P4UYW.png',
             ])->update();
         }
 

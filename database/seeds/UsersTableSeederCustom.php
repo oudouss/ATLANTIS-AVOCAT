@@ -30,7 +30,7 @@ class UsersTableSeederCustom extends Seeder
             User::create([
                 'name'           => 'Maître Avocat',
                 'email'          => 'avocat@app.com',
-                'avatar'         => 'users\September2020\11KFtdBU0w2iokAUr7xr.png',
+                'avatar'         => 'users/September2020/11KFtdBU0w2iokAUr7xr.png',
                 'password'       => bcrypt('password'),
                 'locale'         => 'fr',
                 'role_id'        => $role->id,
@@ -41,7 +41,7 @@ class UsersTableSeederCustom extends Seeder
             User::create([
                 'name'           => 'Collaborateur 1',
                 'email'          => 'col1@app.com',
-                'avatar'         => 'users\September2020\11KFtdBU0w2iokAUr7xr.png',
+                'avatar'         => 'users/September2020/11KFtdBU0w2iokAUr7xr.png',
                 'password'       => bcrypt('password'),
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
@@ -50,7 +50,7 @@ class UsersTableSeederCustom extends Seeder
             User::create([
                 'name'           => 'Collaborateur 2',
                 'email'          => 'col2@app.com',
-                'avatar'         => 'users\defaultAvatar.png',
+                'avatar'         => 'users/defaultAvatar.png',
                 'password'       => bcrypt('password'),
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
@@ -61,7 +61,7 @@ class UsersTableSeederCustom extends Seeder
             User::create([
                 'name'           => 'Client Test',
                 'email'          => 'client-test@app.com',
-                'avatar'         => 'users\September2020\XhlcbhGlETcrwpTXkShF.png',
+                'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
                 'password'       => bcrypt('password'),
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
@@ -72,7 +72,7 @@ class UsersTableSeederCustom extends Seeder
             User::create([
                 'name'           => 'Huissier 1',
                 'email'          => 'huissier1@app.com',
-                'avatar'         => 'users\September2020\XhlcbhGlETcrwpTXkShF.png',
+                'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
                 'password'       => bcrypt('password'),
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
@@ -83,7 +83,7 @@ class UsersTableSeederCustom extends Seeder
             User::create([
                 'name'           => 'Expert 1',
                 'email'          => 'expert1@app.com',
-                'avatar'         => 'users\September2020\XhlcbhGlETcrwpTXkShF.png',
+                'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
                 'password'       => bcrypt('password'),
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
