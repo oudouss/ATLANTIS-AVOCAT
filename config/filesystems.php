@@ -66,6 +66,15 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'do_spaces' => [
+            'driver' => 's3',
+            'key' => env('DO_SPACES_KEY'),
+            'secret' => env('DO_SPACES_SECRET'),
+            'bucket' => env('DO_SPACES_BUCKET'),
+            'region' => env('DO_SPACES_REGION'),
+            'endpoint' => env('DO_SPACES_ENDPOINT'),
+            'visibility' => 'public',
+        ],
     ],
 
     /*
@@ -81,6 +90,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        // public_path('storage') => storage_path('app'),
     ],
 
 ];
