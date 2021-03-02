@@ -20,7 +20,7 @@ class UsersTableSeederCustom extends Seeder
                 'name'           => 'Administrateur',
                 'email'          => 'admin@app.com',
                 'password'       => bcrypt(config('voyager.adminPassword')),
-                'avatar'         => 'users/defaultAvatar.png',
+                'avatar'         => 'users/March2021/MDnzvodhllJcfJ2VZleH.png',
                 'locale'         => 'fr',
                 'role_id'        => $role->id,
             ]);
@@ -31,7 +31,7 @@ class UsersTableSeederCustom extends Seeder
                 'name'           => 'Maître Avocat',
                 'email'          => 'avocat@app.com',
                 'avatar'         => 'users/September2020/11KFtdBU0w2iokAUr7xr.png',
-                'password'       => bcrypt('password'),
+                'password'       => bcrypt('password2021**'),
                 'locale'         => 'fr',
                 'role_id'        => $role->id,
             ]);
@@ -42,7 +42,7 @@ class UsersTableSeederCustom extends Seeder
                 'name'           => 'Collaborateur 1',
                 'email'          => 'col1@app.com',
                 'avatar'         => 'users/September2020/11KFtdBU0w2iokAUr7xr.png',
-                'password'       => bcrypt('password'),
+                'password'       => bcrypt('password2021**'),
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
             ]);
@@ -51,7 +51,7 @@ class UsersTableSeederCustom extends Seeder
                 'name'           => 'Collaborateur 2',
                 'email'          => 'col2@app.com',
                 'avatar'         => 'users/defaultAvatar.png',
-                'password'       => bcrypt('password'),
+                'password'       => bcrypt('password2021**'),
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
             ]);
@@ -66,28 +66,29 @@ class UsersTableSeederCustom extends Seeder
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
             ]);
+//TODO:ADD ROLES FOR 
+            // $role = Role::where('name', 'Huissier')->firstOrFail();
 
-            $role = Role::where('name', 'Huissier')->firstOrFail();
+            // User::create([
+            //     'name'           => 'Huissier 1',
+            //     'email'          => 'huissier1@app.com',
+            //     'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
+            //     'password'       => bcrypt('password'),
+            //     'locale'       => 'fr',
+            //     'role_id'        => $role->id,
+            // ]);
 
-            User::create([
-                'name'           => 'Huissier 1',
-                'email'          => 'huissier1@app.com',
-                'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
-                'password'       => bcrypt('password'),
-                'locale'       => 'fr',
-                'role_id'        => $role->id,
-            ]);
+            // $role = Role::where('name', 'Expert')->firstOrFail();
 
-            $role = Role::where('name', 'Expert')->firstOrFail();
-
-            User::create([
-                'name'           => 'Expert 1',
-                'email'          => 'expert1@app.com',
-                'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
-                'password'       => bcrypt('password'),
-                'locale'       => 'fr',
-                'role_id'        => $role->id,
-            ]);
+            // User::create([
+            //     'name'           => 'Expert 1',
+            //     'email'          => 'expert1@app.com',
+            //     'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
+            //     'password'       => bcrypt('password'),
+            //     'locale'       => 'fr',
+            //     'role_id'        => $role->id,
+            // ]);
+//TODO:ADD ROLES FOR ACCOUNTANT
         }
 
 

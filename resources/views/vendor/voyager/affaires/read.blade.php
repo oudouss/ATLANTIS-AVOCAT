@@ -197,7 +197,7 @@
                                             @foreach(json_decode($attachement->url) as $file)
                                                 <div class="form-group" data-field-name="url">
                                                     <a class="col-xs-9 col-sm-9 col-md-9 text-truncate fileType" target="_blank"
-                                                        href="{{ Storage::disk(config('voyager.storage.disk'))->url($file->download_link) ?: '' }}"
+                                                        href="{{ Storage::disk(config('voyager.storage.disk'))->url($file->download_link) ? str_replace('%5C', '/', Storage::disk(config('voyager.storage.disk'))->url($file->download_link)) : '' }}"
                                                         data-file-name="{{ $file->original_name ?: '' }}" data-id="{{$attachement->id}}">
                                                         <small>
                                                             <i class="voyager-file-text"></i>
