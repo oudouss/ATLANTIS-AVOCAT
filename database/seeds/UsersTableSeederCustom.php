@@ -20,7 +20,7 @@ class UsersTableSeederCustom extends Seeder
                 'name'           => 'Administrateur',
                 'email'          => 'admin@app.com',
                 'password'       => bcrypt(config('voyager.adminPassword')),
-                'avatar'         => 'users\defaultAvatar.png',
+                'avatar'         => 'users/defaultAvatar.png',
                 'locale'         => 'fr',
                 'role_id'        => $role->id,
             ]);
