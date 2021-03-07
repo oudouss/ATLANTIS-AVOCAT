@@ -142,6 +142,28 @@ class DataTypesTableSeederCustom extends Seeder
                 ],
             ])->save();
         }
+        $dataType = $this->dataType('slug', 'factures');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'billings',
+                'display_name_singular' => 'Facture',
+                'display_name_plural'   => 'Factures',
+                'icon'                  => 'voyager-credit-cards',
+                'model_name'            => 'App\Billing',
+                'policy_name'           => null,
+                'controller'            => '\App\Http\Controllers\Voyager\BaseController',
+                'description'           => null,
+                'generate_permissions'  => 1,
+                'server_side'           => 1,
+                'details'               => [
+                    "order_column" => null,
+                    "order_display_column" => null,
+                    "order_direction" => "asc",
+                    "default_search_key" => null,
+                    "scope" => "currentUser",
+                ],
+            ])->save();
+        }
 
     }
 

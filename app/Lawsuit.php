@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Lawsuit extends Model
 {
     use SoftDeletes;
@@ -41,6 +42,11 @@ class Lawsuit extends Model
     public function events()
     {
         return $this->hasMany('App\Event');
+    }
+
+    public function billings()
+    {
+        return $this->hasMany('App\Billing');
     }
 
     public function getNameAttribute()

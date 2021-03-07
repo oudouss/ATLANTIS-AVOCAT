@@ -125,6 +125,21 @@ class MenuItemsTableSeederCustom extends Seeder
                 'parent_id'  => null,
                 'order'      => 2,
             ])->save();
+
+            $menuItem = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Factures',
+                'url'     => '',
+                'route'   => 'voyager.factures.index',
+            ]);
+
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-credit-cards',
+                'color'      => '#000000',
+                'parent_id'  => null,
+                'order'      => 10,
+            ])->save();
      
         }
     }

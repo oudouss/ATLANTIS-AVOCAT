@@ -64,6 +64,15 @@ class RolesTableSeederCustom extends Seeder
                 'updated_at' => now(),
             ])->save();
         }
+        $role = Role::firstOrNew(['name' => 'Comptable']);
+        if (!$role->exists) {
+            $role->fill([
+                'name' => 'Comptable',
+                'display_name' => 'Comptable',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ])->save();
+        }
 
     }
 }

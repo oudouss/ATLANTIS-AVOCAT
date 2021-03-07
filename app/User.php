@@ -63,16 +63,18 @@ class User extends \TCG\Voyager\Models\User
     {
         $roleAdmin = Role::where('name', 'Admin')->firstOrFail();
         $roleClient = Role::where('name', 'Client')->firstOrFail();
+        $roleComptable = Role::where('name', 'Comptable')->firstOrFail();
         $rolesCabinet = Role::where('name', 'Avocat')->orWhere('name', 'Cabinet')->pluck('id')->toArray();
         
         if (in_array(Auth::user()->role_id, $rolesCabinet)) {
-            $rolesAcc = Role::where('name', 'Avocat')->orWhere('name', 'Cabinet')->orWhere('name', 'Client')->orWhere('name', 'Expert')->orWhere('name', 'Huissier')->pluck('id')->toArray();
+            $rolesAcc = Role::where('name', 'Avocat')->orWhere('name', 'Cabinet')->orWhere('name', 'Client')
+            ->orWhere('name', 'Comptable')->orWhere('name', 'Expert')->orWhere('name', 'Huissier')->pluck('id')->toArray();
             return $query->whereIn('role_id', $rolesAcc);
 
-        }elseif(Auth::user()->role_id == $roleClient->id){
-            $rolesAcc = Role::where('name', 'Avocat')->orWhere('name', 'Cabinet')->pluck('id')->toArray();
+        }elseif((Auth::user()->role_id == $roleClient->id) || (Auth::user()->role_id == $roleComptable->id)){
+            $rolesAcc = Role::where('name', 'Avocat')->pluck('id')->toArray();
             return $query->whereIn('role_id', $rolesAcc);
-                        
+
         }elseif(Auth::user()->role_id == $roleAdmin->id){
             return $query;
         }

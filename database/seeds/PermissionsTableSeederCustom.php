@@ -21,12 +21,15 @@ class PermissionsTableSeederCustom extends Seeder
         Permission::generateFor('contacts');
         
         Permission::generateFor('events');
+        
+        Permission::generateFor('billings');
 
         $tables = [
             'lawsuits',
             'stades',
             'attachements',
             'contacts',
+            'billings',
         ];
 
         foreach ($tables as $table) {

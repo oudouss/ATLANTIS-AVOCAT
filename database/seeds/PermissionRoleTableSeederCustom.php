@@ -18,6 +18,7 @@ class PermissionRoleTableSeederCustom extends Seeder
             'Client',
             'Avocat',
             'Cabinet',
+            'Comptable',
         ];
 
         foreach ($role_names as $role_name) {
@@ -37,6 +38,8 @@ class PermissionRoleTableSeederCustom extends Seeder
                         'edit_events',
                         'add_events',
                         'delete_events',
+                        'browse_billings',
+                        'read_billings',
                     ]);
                 });
                 $role->permissions()->sync($permissionsFiltered->pluck('id')->all());
@@ -66,12 +69,16 @@ class PermissionRoleTableSeederCustom extends Seeder
                         'edit_attachements',
                         'add_attachements',
                         'delete_attachements',
-                        'delete_events',
                         'browse_events',
                         'read_events',
                         'edit_events',
                         'add_events',
                         'delete_events',
+                        'browse_billings',
+                        'read_billings',
+                        'edit_billings',
+                        'add_billings',
+                        'delete_billings',
                     ]);
                 });
                 $role->permissions()->sync($permissionsFiltered->pluck('id')->all());
@@ -98,15 +105,36 @@ class PermissionRoleTableSeederCustom extends Seeder
                         'edit_events',
                         'add_events',
                         'delete_events',
+                        'browse_billings',
+                        'read_billings',
+                        'edit_billings',
+                        'add_billings',
+                    ]);
+                });
+                $role->permissions()->sync($permissionsFiltered->pluck('id')->all());
+            } elseif ($role_name == 'Comptable') {
+                $permissionsFiltered = $permissions->filter(function ($permission, $key) {
+                    return in_array($permission->key, [
+                        'browse_admin',
+                        'browse_lawsuits',
+                        'read_lawsuits',
+                        'browse_events',
+                        'read_events',
+                        'edit_events',
+                        'add_events',
+                        'delete_events',
+                        'browse_billings',
+                        'read_billings',
+                        'edit_billings',
+                        'add_billings',
                     ]);
                 });
                 $role->permissions()->sync($permissionsFiltered->pluck('id')->all());
             }
 
         }
-        
+                
         $role = Role::where('name', 'Admin')->firstOrFail();
-
         $permissions = Permission::all();
 
         $role->permissions()->sync(

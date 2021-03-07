@@ -7,7 +7,10 @@
         @if($site_LOGO == '')
         <img style="width:100px" src="{{ voyager_asset('images/logo-icon.png') }}" alt="logo">
         @else
-        <img style="width:100px" src="{{ Voyager::image($site_LOGO) }}" alt="logo">
+        <img style="width:100px" 
+        src="{{ Storage::disk(config('voyager.storage.disk'))->url($site_LOGO) ?
+            str_replace('%5C', '/', Storage::disk(config('voyager.storage.disk'))->url($site_LOGO)) : '' }}" 
+        alt="logo">
         @endif
         <p>{{ setting('site.description') }}</p>
     </div>
