@@ -17,6 +17,7 @@
         "laraveldaily/laravel-invoices": "^2.0",
         "league/flysystem-aws-s3-v3": "~1.0",
         "league/flysystem-cached-adapter": "~1.0",
+        "symfony/polyfill-intl-icu": "^1.22",
         "tcg/voyager": "1.4.x-dev"
     },
     "require-dev": {

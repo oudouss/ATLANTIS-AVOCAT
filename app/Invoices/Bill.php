@@ -2,10 +2,10 @@
 
 namespace App\Invoices;
 
-use Illuminate\Support\Facades\App;
 use LaravelDaily\Invoices\Invoice;
+use Illuminate\Support\Facades\App;
+use Symfony\Polyfill\Intl\Icu\NumberFormatter;
 use LaravelDaily\Invoices\Traits\CurrencyFormatter;
-use NumberFormatter;
 
 /**
  * Class Invoices
