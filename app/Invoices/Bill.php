@@ -2,9 +2,9 @@
 
 namespace App\Invoices;
 
+use NumberFormatter;
 use LaravelDaily\Invoices\Invoice;
 use Illuminate\Support\Facades\App;
-use Symfony\Polyfill\Intl\Icu\NumberFormatter;
 use LaravelDaily\Invoices\Traits\CurrencyFormatter;
 
 /**
