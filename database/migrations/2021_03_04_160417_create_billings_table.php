@@ -19,38 +19,39 @@ class CreateBillingsTable extends Migration
             $table->date('paid_at')->nullable();
             
             $table->string('type');
-            $table->string('tax')->nullable();
-            $table->string('creance')->nullable();
+            $table->decimal('tax', 8, 2)->nullable();
+            $table->decimal('creance', 20, 2)->nullable();
+
             $table->string('ice')->nullable();
             
-            $table->integer('number');
+            $table->integer('number')->nullable();
             $table->string('serie')->nullable();
             $table->date('date');
-            $table->integer('days');
+            $table->decimal('days', 8, 2)->nullable();
 
             $table->longtext('item1');
             $table->string('unit1')->nullable();
-            $table->integer('qty1')->nullable();
-            $table->integer('price1');
+            $table->decimal('qty1', 8, 2)->nullable();
+            $table->decimal('price1', 20, 2)->nullable();
 
             $table->longtext('item2')->nullable();
             $table->string('unit2')->nullable();
-            $table->integer('qty2')->nullable();
-            $table->integer('price2')->nullable();
+            $table->decimal('qty2', 8, 2)->nullable();
+            $table->decimal('price2', 20, 2)->nullable();
 
 
             $table->longtext('item3')->nullable();
             $table->string('unit3')->nullable();
-            $table->integer('qty3')->nullable();
-            $table->integer('price3')->nullable();
+            $table->decimal('qty3', 8, 2)->nullable();
+            $table->decimal('price3', 20, 2)->nullable();
 
             $table->longtext('item4')->nullable();
             $table->string('unit4')->nullable();
-            $table->integer('qty4')->nullable();
-            $table->integer('price4')->nullable();
+            $table->decimal('qty4', 8, 2)->nullable();
+            $table->decimal('price4', 20, 2)->nullable();
 
             $table->longtext('note')->nullable();
-            $table->integer('total_amount')->nullable();
+            $table->decimal('total_amount', 20, 2)->nullable();
             $table->longText('pdf')->nullable();
             $table->foreign('lawsuit_id')->references('id')->on('lawsuits')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
