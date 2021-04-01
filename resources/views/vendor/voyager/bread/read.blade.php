@@ -122,8 +122,7 @@
                                         <br/>
                                     @endforeach
                                 @else
-                                    <a href="{{ Storage::disk(config('voyager.storage.disk'))->url($row->field) ?: '' }}">
-                                    <a href="{{ Storage::disk(config('voyager.storage.disk'))->url($row->field) ? str_replace('%5C', '/', Storage::disk(config('voyager.storage.disk'))->url($row->field) : '' }}" target="_blank">
+                                    <a href="{{ Storage::disk(config('voyager.storage.disk'))->url($row->field) ? str_replace('%5C', '/', Storage::disk(config('voyager.storage.disk'))->url($row->field)) : '' }}" target="_blank">
                                         {{ __('voyager::generic.download') }}
                                     </a>
                                 @endif

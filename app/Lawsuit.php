@@ -49,6 +49,11 @@ class Lawsuit extends Model
         return $this->hasMany('App\Billing');
     }
 
+    public function convention()
+    {
+        return $this->belongsTo('App\Convention');
+    }
+
     public function getNameAttribute()
     {
         return "Affaire {$this->caseNum}: {$this->client->name} contre {$this->opponent->name}";
@@ -57,10 +62,14 @@ class Lawsuit extends Model
     public function scopeCurrentUser($query)
     {
         $Lawsuit = new Lawsuit;
-        if (Auth::user()->can('edit', $Lawsuit)) {
+        if (Auth::user()->can('deleted', $Lawsuit)) {
             return $query;
-        } else {
-            return $query->whereIn('id', Auth::user()->lawsuits->pluck('id'));
+        }else {
+            if (Auth::user()->can('edit', $Lawsuit)) {
+                return $query->whereNull('deleted_at');
+            } else {
+                return $query->whereIn('id', Auth::user()->lawsuits->pluck('id'))->whereNull('deleted_at');
+            }
         }
     }
 
@@ -72,8 +81,8 @@ class Lawsuit extends Model
         parent::boot();
 
         static::created(function ($lawsuit){
-            $a = 0;
-            $b = 0;
+            $stades_start = 0;
+            $stades_end = 0;
             $c = '#22A7F0';
          
             $stadenames = [
@@ -135,7 +144,7 @@ class Lawsuit extends Model
                     'date' => $lawsuit->acceptation,
                     'state' => 0,
                 ]);
-                $a = 2; $b = 8; $c = '#F4A62A';
+                $stades_start = 2; $stades_end = 8; $c = '#F4A62A';
 
             }
             // Nantissement F.C (stades names:option10=>option15)
@@ -145,7 +154,7 @@ class Lawsuit extends Model
                     'date' => $lawsuit->acceptation,
                     'state' => 0,
                     ]);
-                $a = 10; $b = 15; $c = '#43D17F';
+                $stades_start = 10; $stades_end = 15; $c = '#43D17F';
 
             }
             // Commandement Immobilier (stades names:option16=>option23)
@@ -155,24 +164,26 @@ class Lawsuit extends Model
                     'date' => $lawsuit->acceptation,
                     'state' => 0,
                 ]);
-                $a = 17; $b = 23; $c = '#f02424';
+                $stades_start = 17; $stades_end = 23; $c = '#f02424';
 
 
             }
-            if ( $a != 0 && $b != 0 ) {
+            if ( $stades_start != 0 && $stades_end != 0 ) {
                 
+                $roleAdmin = Role::where('name', 'Admin')->firstOrFail();
                 $roleAvocat = Role::where('name', 'Avocat')->firstOrFail();
                 $roleCabinet = Role::where('name', 'Cabinet')->firstOrFail();
+                $adminUser = User::where('role_id', $roleAdmin->id)->firstOrFail();
                 $RoleUsers = User::where('role_id', $roleAvocat->id)->orWhere('role_id', $roleCabinet->id)->get();
                 $eventIds = collect([]);
                 
-                for ($i = $a; $i < $b + 1; $i++) {
+                for ($i = $stades_start; $i < $stades_end + 1; $i++) {
                     $event = Event::create([
                         'title' => 'Date Limite - ' . $stadenames['option' . $i] . ' - ' . $lawsuit->name,
                         'start_date' => $deadlines['option' . $i],
                         'end_date' => Carbon::parse($deadlines['option' . $i])->addHour()->toDateTimeString(),
                         'background_color' => $c,
-                        'user_id' => 1,
+                        'user_id' => $adminUser->id,
                         'lawsuit_id'=> $lawsuit->id,
                     ]);
                     $eventIds->push($event->id);
@@ -182,8 +193,44 @@ class Lawsuit extends Model
                     $RoleUser->sharedevents()->syncWithoutDetaching($eventIds->all());
                 }
 
+            }            
+        });
+        static::updated(function ($lawsuit){
+            $stadesList = $lawsuit->stades()->pluck('name')->toArray();
+            $stadesListCount = $lawsuit->stades()->pluck('name')->count();
+            if ($lawsuit->procedure=='option4' || $lawsuit->procedure == 'option2') {
+                // Nantissement F.C
+                if ($lawsuit->procedure=='option4'){
+                    $stadeCurateur = 'option12';
+                // Commandement Immobilier
+                }elseif($lawsuit->procedure=='option2'){
+                    $stadeCurateur='option19';
+                }
+                if ($lawsuit->curateur==1) {
+                    if ($stadesListCount>=4) {
+                        if (!in_array($stadeCurateur, $stadesList)) {
+                            $lawsuit->stades()->create([
+                                'name' => $stadeCurateur,
+                                'date' => now(),
+                                'state' => 0,
+                            ]);
+                        }
+                    }
+                }
             }
-                        
+            // dd($stadesList, $stadesListCount, $lawsuit->convention->honoraires,$lawsuit->convention->modalites,$lawsuit->billings->pluck('item1')->toArray());
+            
+        });
+        static::deleting(function ($lawsuit) {
+            $lawsuit->events()->delete();
+            $lawsuit->billings()->delete();
+            $lawsuit->attachements()->delete();
+            $lawsuit->stades()->delete();
+        });
+        static::restoring(function ($lawsuit) {
+            $lawsuit->billings()->withTrashed()->restore();
+            $lawsuit->stades()->withTrashed()->restore();
+            $lawsuit->attachements()->withTrashed()->restore();
         });
     }
 }

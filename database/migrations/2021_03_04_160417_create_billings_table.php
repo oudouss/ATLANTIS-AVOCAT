@@ -16,23 +16,20 @@ class CreateBillingsTable extends Migration
         Schema::create('billings', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('lawsuit_id')->unsigned();
-            $table->date('paid_at')->nullable();
             
             $table->string('type');
             $table->decimal('tax', 8, 2)->nullable();
-            $table->decimal('creance', 20, 2)->nullable();
+            $table->decimal('days', 8, 2)->nullable();
+            $table->date('date')->nullable();
+            $table->date('paid_at')->nullable();
 
-            $table->string('ice')->nullable();
-            
             $table->integer('number')->nullable();
             $table->string('serie')->nullable();
-            $table->date('date');
-            $table->decimal('days', 8, 2)->nullable();
 
             $table->longtext('item1');
             $table->string('unit1')->nullable();
             $table->decimal('qty1', 8, 2)->nullable();
-            $table->decimal('price1', 20, 2)->nullable();
+            $table->decimal('price1', 20, 2);
 
             $table->longtext('item2')->nullable();
             $table->string('unit2')->nullable();

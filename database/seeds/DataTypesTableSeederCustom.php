@@ -148,7 +148,7 @@ class DataTypesTableSeederCustom extends Seeder
                 'name'                  => 'billings',
                 'display_name_singular' => 'Facture',
                 'display_name_plural'   => 'Factures',
-                'icon'                  => 'voyager-credit-cards',
+                'icon'                  => 'voyager-file-text',
                 'model_name'            => 'App\Billing',
                 'policy_name'           => null,
                 'controller'            => '\App\Http\Controllers\Voyager\BaseController',
@@ -161,6 +161,69 @@ class DataTypesTableSeederCustom extends Seeder
                     "order_direction" => "asc",
                     "default_search_key" => null,
                     "scope" => "currentUser",
+                ],
+            ])->save();
+        }
+        $dataType = $this->dataType('slug', 'conventions');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'conventions',
+                'display_name_singular' => 'Convention',
+                'display_name_plural'   => 'Conventions',
+                'icon'                  => 'voyager-receipt',
+                'model_name'            => 'App\Convention',
+                'policy_name'           => null,
+                'controller'            => '\App\Http\Controllers\Voyager\BaseController',
+                'description'           => null,
+                'generate_permissions'  => 1,
+                'server_side'           => 1,
+                'details'               => [
+                    "order_column" => null,
+                    "order_display_column" => null,
+                    "order_direction" => "asc",
+                    "default_search_key" => null,
+                ],
+            ])->save();
+        }
+        $dataType = $this->dataType('slug', 'honoraires');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'honoraires',
+                'display_name_singular' => 'Honoraire',
+                'display_name_plural'   => 'Honoraires',
+                'icon'                  => 'voyager-dollar',
+                'model_name'            => 'App\Honoraire',
+                'policy_name'           => null,
+                'controller'            => '\App\Http\Controllers\Voyager\BaseController',
+                'description'           => null,
+                'generate_permissions'  => 1,
+                'server_side'           => 1,
+                'details'               => [
+                    "order_column" => null,
+                    "order_display_column" => null,
+                    "order_direction" => "asc",
+                    "default_search_key" => null,
+                ],
+            ])->save();
+        }
+        $dataType = $this->dataType('slug', 'modalites');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'modalites',
+                'display_name_singular' => 'Modalité',
+                'display_name_plural'   => 'Modalités',
+                'icon'                  => 'voyager-params',
+                'model_name'            => 'App\Modalite',
+                'policy_name'           => null,
+                'controller'            => '\App\Http\Controllers\Voyager\BaseController',
+                'description'           => null,
+                'generate_permissions'  => 1,
+                'server_side'           => 1,
+                'details'               => [
+                    "order_column" => null,
+                    "order_display_column" => null,
+                    "order_direction" => "asc",
+                    "default_search_key" => null,
                 ],
             ])->save();
         }

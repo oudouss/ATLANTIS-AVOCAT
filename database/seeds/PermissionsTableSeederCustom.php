@@ -23,6 +23,12 @@ class PermissionsTableSeederCustom extends Seeder
         Permission::generateFor('events');
         
         Permission::generateFor('billings');
+        
+        Permission::generateFor('conventions');
+        
+        Permission::generateFor('honoraires');
+        
+        Permission::generateFor('modalites');
 
         $tables = [
             'lawsuits',
@@ -30,6 +36,9 @@ class PermissionsTableSeederCustom extends Seeder
             'attachements',
             'contacts',
             'billings',
+            'conventions',
+            'honoraires',
+            'modalites',
         ];
 
         foreach ($tables as $table) {

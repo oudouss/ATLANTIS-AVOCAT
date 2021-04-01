@@ -135,12 +135,71 @@ class MenuItemsTableSeederCustom extends Seeder
 
             $menuItem->fill([
                 'target'     => '_self',
-                'icon_class' => 'voyager-credit-cards',
+                'icon_class' => 'voyager-file-text',
                 'color'      => '#000000',
                 'parent_id'  => null,
                 'order'      => 10,
             ])->save();
+
+            $menuItemFacturation = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Facturation',
+                'url'     => '',
+                'route'   => null,
+            ]);
+
+            $menuItemFacturation->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-logbook',
+                'color'      => '#000000',
+                'parent_id'  => null,
+                'order'      => 11,
+            ])->save();
      
+            $menuItem = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Conventions',
+                'url'     => '',
+                'route'   => 'voyager.conventions.index',
+            ]);
+                
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-receipt',
+                'color'      => '#000000',
+                'parent_id'  => $menuItemFacturation->id,
+                'order'      => 1,                  
+            ])->save();
+     
+            $menuItem = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Honoraires',
+                'url'     => '',
+                'route'   => 'voyager.honoraires.index',
+            ]);
+                
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-dollar',
+                'color'      => '#000000',
+                'parent_id'  => $menuItemFacturation->id,
+                'order'      => 2,                  
+            ])->save();
+     
+            $menuItem = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Modalités',
+                'url'     => '',
+                'route'   => 'voyager.modalites.index',
+            ]);
+                
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-params',
+                'color'      => '#000000',
+                'parent_id'  => $menuItemFacturation->id,
+                'order'      => 3,                  
+            ])->save();
         }
     }
 }

@@ -37,7 +37,6 @@ class DataRowsTableSeederCustom extends Seeder
                 'order'        => 1,
             ])->save();
         }
-
         $dataRow = $this->dataRow($contactDataType, 'category');
         if (!$dataRow->exists) {
             $dataRow->fill([
@@ -236,34 +235,44 @@ class DataRowsTableSeederCustom extends Seeder
                 'order'        => 9,
             ])->save();
         }
-        $dataRow = $this->dataRow($contactDataType, 'work');
-        if (!$dataRow->exists) {
-            $dataRow->fill([
-                'type'         => 'text',
-                'display_name' => 'Fonction',
-                'required'     => 0,
-                'browse'       => 0,
-                'read'         => 1,
-                'edit'         => 1,
-                'add'          => 1,
-                'delete'       => 1,
-                'details'      => '',
-                'order'        => 12,
-            ])->save();
-        }
         $dataRow = $this->dataRow($contactDataType, 'cin');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'text',
-                'display_name' => 'Cin',
+                'display_name' => 'CIN',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 1,
                 'edit'         => 1,
                 'add'          => 1,
                 'delete'       => 1,
-                'details'      => '',
-                'order'        => 15,
+                'details' => [
+                    "description" => "Vous pouvez laisser ce champs vide, si aucun code CIN!",
+                    "display" => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 10,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($contactDataType, 'ice');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'text',
+                'display_name' => 'ICE',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Vous pouvez laisser ce champs vide, si aucun code ICE!",
+                    "display" => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 11,
             ])->save();
         }
         $dataRow = $this->dataRow($contactDataType, 'phone');
@@ -277,42 +286,13 @@ class DataRowsTableSeederCustom extends Seeder
                 'edit'         => 1,
                 'add'          => 1,
                 'delete'       => 1,
-                'details'      => [
+                'details' => [
+                    "description" => "Vous pouvez laisser ce champs vide, si aucun TÉLÉPHONE!",
                     "display" => [
                         'width' => 6,
                     ],
                 ],
-                'order'        => 10,
-            ])->save();
-        }
-        $dataRow = $this->dataRow($contactDataType, 'fix');
-        if (!$dataRow->exists) {
-            $dataRow->fill([
-                'type'         => 'text',
-                'display_name' => 'Fix',
-                'required'     => 0,
-                'browse'       => 0,
-                'read'         => 1,
-                'edit'         => 1,
-                'add'          => 1,
-                'delete'       => 1,
-                'details'      => '',
-                'order'        => 13,
-            ])->save();
-        }
-        $dataRow = $this->dataRow($contactDataType, 'fax');
-        if (!$dataRow->exists) {
-            $dataRow->fill([
-                'type'         => 'text',
-                'display_name' => 'Fax',
-                'required'     => 0,
-                'browse'       => 0,
-                'read'         => 1,
-                'edit'         => 1,
-                'add'          => 1,
-                'delete'       => 1,
-                'details'      => '',
-                'order'        => 14,
+                'order'        => 12,
             ])->save();
         }
         $dataRow = $this->dataRow($contactDataType, 'email');
@@ -326,12 +306,73 @@ class DataRowsTableSeederCustom extends Seeder
                 'edit'         => 1,
                 'add'          => 1,
                 'delete'       => 1,
-                'details'      => [
+                'details' => [
+                    "description" => "Vous pouvez laisser ce champs vide, si aucun EMAIL!",
                     "display" => [
                         'width' => 6,
                     ],
                 ],
-                'order'        => 11,
+                'order'        => 13,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($contactDataType, 'fix');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'text',
+                'display_name' => 'Fixe',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Vous pouvez laisser ce champs vide, si aucun TÉLÉPHONE FIXE!",
+                    "display" => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 14,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($contactDataType, 'fax');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'text',
+                'display_name' => 'Fax',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Vous pouvez laisser ce champs vide, si aucun FAX!",
+                    "display" => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 15,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($contactDataType, 'work');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'text',
+                'display_name' => 'Fonction',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Vous pouvez laisser ce champs vide, si aucun FONCTION!",
+                    "display" => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 16,
             ])->save();
         }
         $dataRow = $this->dataRow($contactDataType, 'site');
@@ -345,8 +386,13 @@ class DataRowsTableSeederCustom extends Seeder
                 'edit'         => 1,
                 'add'          => 1,
                 'delete'       => 1,
-                'details'      => '',
-                'order'        => 16,
+                'details' => [
+                    "description" => "Vous pouvez laisser ce champs vide, si aucun SITE!",
+                    "display" => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 17,
             ])->save();
         }
         $dataRow = $this->dataRow($contactDataType, 'created_at');
@@ -361,14 +407,14 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 17,
+                'order'        => 18,
             ])->save();
         }
         $dataRow = $this->dataRow($contactDataType, 'updated_at');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'timestamp',
-                'display_name' => 'Mis à jour le',
+                'display_name' => 'Modifié le',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 0,
@@ -376,7 +422,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 18,
+                'order'        => 19,
             ])->save();
         }
         $dataRow = $this->dataRow($contactDataType, 'deleted_at');
@@ -391,7 +437,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 19,
+                'order'        => 20,
             ])->save();
         }
 
@@ -497,7 +543,7 @@ class DataRowsTableSeederCustom extends Seeder
                         "option11" => "Relations internationales",
                     ],
                     "display" => [
-                        'width' => 6,
+                        'width' => 3,
                     ],
                 ],
                 'order'        => 7,
@@ -527,7 +573,7 @@ class DataRowsTableSeederCustom extends Seeder
                         "option8"  => "Autres",
                     ],
                     "display" => [
-                        'width' => 6,
+                        'width' => 3,
                     ],
                 ],
                 'order'        => 8,
@@ -537,7 +583,7 @@ class DataRowsTableSeederCustom extends Seeder
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'text',
-                'display_name' => 'N° Affaire',
+                'display_name' => 'Réf Affaire',
                 'required'     => 1,
                 'browse'       => 1,
                 'read'         => 1,
@@ -546,20 +592,13 @@ class DataRowsTableSeederCustom extends Seeder
                 'delete'       => 1,
                 'details'      => [
                     "validation"=> [
-                        "rule" => "unique:lawsuits,caseNum",
-                        "edit"=>[
-                            "rule"=>"nullable"
-                        ],
-                        "add"=>[
-                            "rule"=>"required"
-                        ],
+                        "rule"=>"required",
                         "messages"=>[
                             "required"=>":attribute: Ce champ est obligatoire.",
-                            "unique"=>":attribute: Ce champ existe déjà.",
                         ],
                     ],
                     "display" => [
-                        'width' => 6,
+                        'width' => 3,
                     ],
                 ],
                 'order'        => 9,
@@ -569,7 +608,7 @@ class DataRowsTableSeederCustom extends Seeder
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'text',
-                'display_name' => 'N° Dossier',
+                'display_name' => 'Dossier N°',
                 'required'     => 1,
                 'browse'       => 1,
                 'read'         => 1,
@@ -578,23 +617,39 @@ class DataRowsTableSeederCustom extends Seeder
                 'delete'       => 1,
                 'details'      => [
                     "validation" => [
-                        "rule" => "unique:lawsuits,fileNum",
-                        "edit" => [
-                            "rule" => "nullable"
-                        ],
-                        "add" => [
-                            "rule" => "required"
-                        ],
+                        "rule" => "required|unique:lawsuits,fileNum,id",
                         "messages" => [
                             "required" => ":attribute: Ce champ est obligatoire.",
-                            "unique"=>":attribute: Ce champ existe déjà.",
+                            "unique"=> ":attribute: Ce dossier existe déjà. Choisisez un autre numéro!",
+
                         ],
                     ],
                     "display" => [
-                        'width' => 6,
+                        'width' => 3,
                     ],
                 ],
                 'order'        => 10,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($affaireDataType, 'curateur');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'checkbox',
+                'display_name' => 'Procédure Curateur',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "on" => "Déclencher",
+                    "off" => "Non",
+                    "display" => [
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 11,
             ])->save();
         }
         $dataRow = $this->dataRow($affaireDataType, 'state');
@@ -617,17 +672,17 @@ class DataRowsTableSeederCustom extends Seeder
                     "option4" => "Archivée",
                     ],
                     "display" => [
-                        'width' => 6,
+                        'width' => 4,
                     ],
                 ],
-                'order'        => 11,
+                'order'        => 12,
             ])->save();
         }
         $dataRow = $this->dataRow($affaireDataType, 'acceptation');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'date',
-                'display_name' => 'Acceptation',
+                'display_name' => 'Date Acceptation',
                 'required'     => 1,
                 'browse'       => 1,
                 'read'         => 1,
@@ -635,50 +690,125 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 1,
                 'delete'       => 1,
                 'details'      => [
+                    "format" => "%d-%m-%Y",
                     "validation" => [
                         "rule" => "required",
                         "messages" => [
                             "required" => ":attribute: Ce champ est obligatoire.",
+                            "date" => ":attribute: Ce champ doit obligatoirement être une date.",
                         ],
                     ],
                     "display" => [
-                        'width' => 6,
+                        'width' => 2,
                     ],
                 ],
-                'order'        => 12,
+                'order'        => 13,
             ])->save();
         }
         $dataRow = $this->dataRow($affaireDataType, 'classement');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'date',
-                'display_name' => 'Classement',
+                'display_name' => 'Date Classement',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 0,
-                'edit'         => 0,
-                'add'          => 0,
-                'delete'       => 0,
-                'details'      => '',
-                'order'        => 13,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "format" => "%d-%m-%Y",
+                    "validation" => [
+                        "rule"  => "required_if:state,option3",
+                        "messages" => [
+                            "required_if" => ":attribute: Ce champ est obligatoire!",
+
+                        ],
+                    ],
+                    "display" => [
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 14,
             ])->save();
         }
         $dataRow = $this->dataRow($affaireDataType, 'archivage');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'date',
-                'display_name' => 'Archivage',
+                'display_name' => 'Date Archivage',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 0,
-                'edit'         => 0,
-                'add'          => 0,
-                'delete'       => 0,
-                'details'      => '',
-                'order'        => 14,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "format" => "%d-%m-%Y",
+                    "validation" => [
+                        "rule"  => "required_if:state,option4",
+                        "messages" => [
+                            "required_if" => ":attribute: Ce champ est obligatoire!",
+
+                        ],
+                    ],
+                    "display" => [
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 15,
             ])->save();
         }
-        $dataRow = $this->dataRow($affaireDataType, 'observation');
+        $dataRow = $this->dataRow($affaireDataType, 'convention_id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Convention',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "description"   => "Vous pouvez laisser ce champs vide, si aucune convention",
+                    "display"       => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 16,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($affaireDataType, 'creance');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Créance',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Montant de la créance. Vous pouvez laisser ce champs vide, si aucune créance pour cette affaire!",
+                    "step"=> 0.01,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 6,
+                    ],
+                    "validation" => [
+                        "rule"  => "required_if:procedure,option1,option2,option3,option4",
+                        "messages" => [
+                            "required_if" => ":attribute: Ce champ est obligatoire, pour cette procédure!",
+
+                        ],
+                    ],
+                ],
+                'order'        => 18,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($affaireDataType, 'notes');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'rich_text_box',
@@ -690,7 +820,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 1,
                 'delete'       => 1,
                 'details'      => '',
-                'order'        => 15,
+                'order'        => 19,
             ])->save();
         }
         $dataRow = $this->dataRow($affaireDataType, 'created_at');
@@ -705,14 +835,14 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 16,
+                'order'        => 40,
             ])->save();
         }
         $dataRow = $this->dataRow($affaireDataType, 'updated_at');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'timestamp',
-                'display_name' => 'Mis à jour le',
+                'display_name' => 'Modifiée le',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 0,
@@ -720,14 +850,14 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 17,
+                'order'        => 41,
             ])->save();
         }
         $dataRow = $this->dataRow($affaireDataType, 'deleted_at');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'timestamp',
-                'display_name' => 'Supprimé le',
+                'display_name' => 'Supprimée le',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 0,
@@ -735,7 +865,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 20,
+                'order'        => 42,
             ])->save();
         }
         $dataRow = $this->dataRow($affaireDataType, 'lawsuit_belongsto_contact_relationship');
@@ -819,10 +949,39 @@ class DataRowsTableSeederCustom extends Seeder
                     "pivot"         => "1",
                     "taggable"      => "0",
                     "display" => [
-                        'width' => 6,
+                        'width' => 12,
                     ],
                 ], 
                 'order'        => 1,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($affaireDataType, 'lawsuit_belongsto_convention_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'relationship',
+                'display_name' => 'Convention',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "description"   => "Vous pouvez laisser ce champs vide, si aucune convention",
+                    "model"         => "App\\Convention",
+                    "table"         => "conventions",
+                    "type"          => "belongsTo",
+                    "column"        => "convention_id",
+                    "key"           => "id",
+                    "label"         => "name",
+                    "pivot_table"   => "attachements",
+                    "pivot"         => "0",
+                    "taggable"      => "0",
+                    "display" => [
+                        'width' => 6,
+                    ],
+                ], 
+                'order'        => 17,
             ])->save();
         }
 
@@ -935,9 +1094,8 @@ class DataRowsTableSeederCustom extends Seeder
                     "validation" => [
                         "rule" => "required",
                         "messages" => [
-                            "required" => ":attribute: Ce champ est obligatoire.",
-                        ]
-                    ]
+                            "required" => ":attribute: Ce champ est obligatoire.",                        ],
+                    ],
                 ],
                 'order'        => 5,
             ])->save();
@@ -955,7 +1113,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'delete'       => 1,
                 'details'      => [
                     "on" => "Fini",
-                    "off" => "en-cours",
+                    "off" => "En-Cours",
                 ],
                 'order'        => 6,
             ])->save();
@@ -979,7 +1137,7 @@ class DataRowsTableSeederCustom extends Seeder
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'timestamp',
-                'display_name' => 'Crée le',
+                'display_name' => 'Créé le',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 0,
@@ -1166,7 +1324,7 @@ class DataRowsTableSeederCustom extends Seeder
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'timestamp',
-                'display_name' => 'Crée le',
+                'display_name' => 'Créé le',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 0,
@@ -1353,6 +1511,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 1,
                 'delete'       => 1,
                 'details'      => [
+                    "format" => "%d-%m-%Y",
                     "validation" => [
                         "rule" => "required",
                         "messages" => [
@@ -1378,6 +1537,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 1,
                 'delete'       => 1,
                 'details'      => [
+                    "format" => "%d-%m-%Y",
                     "validation" => [
                         "rule" => "required",
                         "messages" => [
@@ -1398,7 +1558,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'display_name' => 'Couleur du Fond',
                 'required'     => 0,
                 'browse'       => 1,
-                'read'         => 1,
+                'read'         => 0,
                 'edit'         => 1,
                 'add'          => 1,
                 'delete'       => 1,
@@ -1419,7 +1579,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'display_name' => 'Couleur du text',
                 'required'     => 0,
                 'browse'       => 1,
-                'read'         => 1,
+                'read'         => 0,
                 'edit'         => 1,
                 'add'          => 1,
                 'delete'       => 1,
@@ -1436,7 +1596,7 @@ class DataRowsTableSeederCustom extends Seeder
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'text_area',
-                'display_name' => 'Description',
+                'display_name' => 'Notes',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 1,
@@ -1544,7 +1704,6 @@ class DataRowsTableSeederCustom extends Seeder
             ])->save();
         }
 
-
         /*
         |--------------------------------------------------------------------------
         | Billings
@@ -1563,7 +1722,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 4,
+                'order'        => 1,
             ])->save();
         }
         $dataRow = $this->dataRow($facturesDataType, 'lawsuit_id');
@@ -1579,7 +1738,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'delete'       => 1,
                 'details' => [
                     "display" => [
-                        'width' => 6,
+                        'width' => 12,
                     ],
                     "validation" => [
                         "rule" => "required",
@@ -1588,28 +1747,7 @@ class DataRowsTableSeederCustom extends Seeder
                         ],
                     ],
                 ],
-                'order'        => 1,
-            ])->save();
-        }
-        $dataRow = $this->dataRow($facturesDataType, 'paid_at');
-        if (!$dataRow->exists) {
-            $dataRow->fill([
-                'type'         => 'date',
-                'display_name' => 'Payée le',
-                'required'     => 0,
-                'browse'       => 1,
-                'read'         => 1,
-                'edit'         => 1,
-                'add'          => 1,
-                'delete'       => 1,
-                'details' => [
-                    "description" => "Date de payement de la facture",
-                    "format" => "%d-%m-%Y",
-                    "display" => [
-                        'width' => 6,
-                    ],
-                ],
-                'order'        => 3,
+                'order'        => 2,
             ])->save();
         }
         $dataRow = $this->dataRow($facturesDataType, 'type');
@@ -1632,7 +1770,7 @@ class DataRowsTableSeederCustom extends Seeder
                         "option3"=> "NOTE DE FRAIS"
                     ],
                     "display" => [
-                        'width' => 3,
+                        'width' => 2,
                     ],
                     "validation" => [
                         "rule" => "required",
@@ -1641,7 +1779,7 @@ class DataRowsTableSeederCustom extends Seeder
                         ],
                     ],
                 ],
-                'order'        => 5,
+                'order'        => 4,
             ])->save();
         }
         $dataRow = $this->dataRow($facturesDataType, 'tax');
@@ -1650,7 +1788,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'type'         => 'number',
                 'display_name' => 'TVA%',
                 'required'     => 0,
-                'browse'       => 0,
+                'browse'       => 1,
                 'read'         => 1,
                 'edit'         => 1,
                 'add'          => 1,
@@ -1660,27 +1798,48 @@ class DataRowsTableSeederCustom extends Seeder
                     "step"=> 0.01,
                     "min"=> 0,
                     "display" => [
-                        'width' => 3,
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 5,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($facturesDataType, 'days');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Jours',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Nombre de jours avant la date d'échéance de la facture. Vous pouvez laisser ce champs vide, la valeur par défault de 15 jours sera utilisée!",
+                    "step"=> 1,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 2,
                     ],
                 ],
                 'order'        => 6,
             ])->save();
         }
-        $dataRow = $this->dataRow($facturesDataType, 'creance');
+        $dataRow = $this->dataRow($facturesDataType, 'date');
         if (!$dataRow->exists) {
             $dataRow->fill([
-                'type'         => 'number',
-                'display_name' => 'Créance',
+                'type'         => 'date',
+                'display_name' => 'Date Facturation',
                 'required'     => 0,
-                'browse'       => 0,
-                'read'         => 0,
+                'browse'       => 1,
+                'read'         => 1,
                 'edit'         => 1,
                 'add'          => 1,
                 'delete'       => 1,
                 'details' => [
-                    "description" => "Créance de la partie adverse. Vous pouvez laisser ce champs vide, si aucune créance",
-                    "step"=> 0.01,
-                    "min"=> 0,
+                    "description" => "Date de facturation. Vous pouvez laisser ce champs vide, la date d'haujourd'hui sera utilisée!",
+                    "format" => "%d-%m-%Y",
                     "display" => [
                         'width' => 3,
                     ],
@@ -1688,19 +1847,20 @@ class DataRowsTableSeederCustom extends Seeder
                 'order'        => 7,
             ])->save();
         }
-        $dataRow = $this->dataRow($facturesDataType, 'ice');
+        $dataRow = $this->dataRow($facturesDataType, 'paid_at');
         if (!$dataRow->exists) {
             $dataRow->fill([
-                'type'         => 'text',
-                'display_name' => 'ICE',
+                'type'         => 'date',
+                'display_name' => 'Date Payement',
                 'required'     => 0,
-                'browse'       => 0,
-                'read'         => 0,
+                'browse'       => 1,
+                'read'         => 1,
                 'edit'         => 1,
                 'add'          => 1,
                 'delete'       => 1,
                 'details' => [
-                    "description" => "Code ICE du client. Vous pouvez laisser ce champs vide, si aucun code ICE!",
+                    "description" => "Date de payement de la facture",
+                    "format" => "%d-%m-%Y",
                     "display" => [
                         'width' => 3,
                     ],
@@ -1713,24 +1873,18 @@ class DataRowsTableSeederCustom extends Seeder
             $dataRow->fill([
                 'type'         => 'number',
                 'display_name' => 'Facture N°',
-                'required'     => 1,
-                'browse'       => 0,
+                'required'     => 0,
+                'browse'       => 1,
                 'read'         => 1,
                 'edit'         => 1,
-                'add'          => 1,
+                'add'          => 0,
                 'delete'       => 1,
                 'details' => [
-                    "description" => "Numéro de la facture",
+                    "description" => "Numéro de la facture. Vous pouvez laisser ce champs vide, il sera auto-généré!",
                     "step"=> 1,
-                    "min"=> 0,
+                    "min"=> 1,
                     "display" => [
-                        'width' => 3,
-                    ],
-                    "validation" => [
-                        "rule" => "required",
-                        "messages"=>[
-                            "required" => ":attribute: Ce champ est obligatoire.",
-                        ],
+                        'width' => 6,
                     ],
                 ],
                 'order'        => 9,
@@ -1740,75 +1894,26 @@ class DataRowsTableSeederCustom extends Seeder
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'text',
-                'display_name' => 'Série N°',
+                'display_name' => 'Série',
                 'required'     => 0,
-                'browse'       => 0,
+                'browse'       => 1,
                 'read'         => 1,
                 'edit'         => 1,
-                'add'          => 1,
+                'add'          => 0,
                 'delete'       => 1,
                 'details' => [
                     "description" => "Série de la facture. Vous pouvez laisser ce champs vide, l'année en cours sera utilisée!",
                     "display" => [
-                        'width' => 3,
+                        'width' => 6,
+                    ],
+                    "validation" => [
+                        "rule" => "nullable|regex:~[0-9]{4}$~",
+                        "messages"=>[
+                            "regex" => ":attribute: Merci de saisir l'année de facturation en 4 chiffre! exemple: 2020",
+                        ],
                     ],
                 ],
                 'order'        => 10,
-            ])->save();
-        }
-        $dataRow = $this->dataRow($facturesDataType, 'date');
-        if (!$dataRow->exists) {
-            $dataRow->fill([
-                'type'         => 'date',
-                'display_name' => 'Date',
-                'required'     => 1,
-                'browse'       => 1,
-                'read'         => 1,
-                'edit'         => 1,
-                'add'          => 1,
-                'delete'       => 1,
-                'details' => [
-                    "description" => "Date de facturation",
-                    "format" => "%d-%m-%Y",
-                    "display" => [
-                        'width' => 3,
-                    ],
-                    "validation" => [
-                        "rule" => "required",
-                        "messages"=>[
-                            "required" => ":attribute: Ce champ est obligatoire.",
-                        ],
-                    ],
-                ],
-                'order'        => 11,
-            ])->save();
-        }
-        $dataRow = $this->dataRow($facturesDataType, 'days');
-        if (!$dataRow->exists) {
-            $dataRow->fill([
-                'type'         => 'number',
-                'display_name' => 'Jours',
-                'required'     => 1,
-                'browse'       => 1,
-                'read'         => 1,
-                'edit'         => 1,
-                'add'          => 1,
-                'delete'       => 1,
-                'details' => [
-                    "description" => "Nombre de jours avant la date d'échéance de la facture",
-                    "step"=> 1,
-                    "min"=> 0,
-                    "display" => [
-                        'width' => 3,
-                    ],
-                    "validation" => [
-                        "rule" => "required",
-                        "messages"=>[
-                            "required" => ":attribute: Ce champ est obligatoire.",
-                        ],
-                    ],
-                ],
-                'order'        => 12,
             ])->save();
         }
         $dataRow = $this->dataRow($facturesDataType, 'item1');
@@ -1828,12 +1933,6 @@ class DataRowsTableSeederCustom extends Seeder
                     "min"=> 0,
                     "display" => [
                         'width' => 3,
-                    ],
-                    "validation" => [
-                        "rule" => "required",
-                        "messages"=>[
-                            "required" => ":attribute: Ce champ est obligatoire.",
-                        ],
                     ],
                 ],
                 'order'        => 13,
@@ -1899,12 +1998,12 @@ class DataRowsTableSeederCustom extends Seeder
                     "display" => [
                         'width' => 3,
                     ],
-                "validation" => [
-                    "rule" => "required",
-                    "messages"=>[
-                        "required" => ":attribute: Ce champ est obligatoire.",
+                    "validation" => [
+                        "rule" => "required",
+                        "messages"=>[
+                            "required" => ":attribute: Ce champ est obligatoire.",
+                        ],
                     ],
-                ],
                 ],
                 'order'        => 16,
             ])->save();
@@ -2076,7 +2175,7 @@ class DataRowsTableSeederCustom extends Seeder
                     "min"=> 0,
                     "display" => [
                         'width' => 3,
-                    ],
+                    ],                 
                 ],
                 'order'        => 24,
             ])->save();
@@ -2093,7 +2192,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 1,
                 'delete'       => 1,
                 'details' => [
-                    "description" => "Titre et déscription de la mission",
+                    "description" => "Déscription de la mission",
                     "step"=> 1,
                     "min"=> 0,
                     "display" => [
@@ -2235,7 +2334,7 @@ class DataRowsTableSeederCustom extends Seeder
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'timestamp',
-                'display_name' => 'Crée le',
+                'display_name' => 'Créé le',
                 'required'     => 0,
                 'browse'       => 0,
                 'read'         => 0,
@@ -2289,7 +2388,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'delete' => 1,
                 'details' => [
                     "display" => [
-                        'width' => 6,
+                        'width' => 12,
                     ],
                     "model" => "App\\Lawsuit",
                     "table" => "lawsuits",
@@ -2301,9 +2400,744 @@ class DataRowsTableSeederCustom extends Seeder
                     "pivot" => "0",
                     "taggable" => "0",
                 ],
-                'order' => 2,
+                'order' => 3,
             ])->save();
         }
+        /*
+        |--------------------------------------------------------------------------
+        | Conventions
+        |--------------------------------------------------------------------------
+        */
+        $conventionsDataType = DataType::where('slug', 'conventions')->firstOrFail();
+        $dataRow = $this->dataRow($conventionsDataType, 'id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'hidden',
+                'display_name' => 'id',
+                'required'     => 1,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 1,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($conventionsDataType, 'name');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'text',
+                'display_name' => 'Titre',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "validation"=> [
+                        "rule"=>"required|unique:conventions,name,id",
+                        "messages"=>[
+                            "required"=>":attribute: Ce champ est obligatoire.",
+                            "unique"=>":attribute: Cette convention existe déjà. Choisisez un autre nom!",
+                        ],
+                    ],
+                    "display" => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 2,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($conventionsDataType, 'procedure');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'select_dropdown',
+                'display_name' => 'Procédure',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "default" => "option1",
+                    "options" => [
+                        "option1" => "Assignation",
+                        "option2" => "Commandement Immobilier",
+                        "option3" => "Contestation",
+                        "option4" => "Nantissement F.C",
+                        "option5" => "Mesures Conservatoires",
+                        "option6"  => "Mesures Exécutoires",
+                        "option7"  => "Recouvrement",
+                    ],
+                    "validation" => [
+                        "rule" => "required",
+                        "messages" => [
+                            "required" => ":attribute: Ce champ est obligatoire.",
+                        ],
+                    ],
+                    "display" => [
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 3,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($conventionsDataType, 'type');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'checkbox',
+                'display_name' => 'Montant Fixe ou Pourcentage',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "description" => "Honoraire de l'affaire: Montant Fixe ou Pourcentage de la créance",
+                    "on" => "Montant Fixe",
+                    "off" => "Pourcentage",
+                    "display" => [
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 4,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($conventionsDataType, 'amount');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Montant Fixe',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "step"=> 0.01,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 2,
+                    ],
+                    "validation" => [
+                        "rule" => "required_if:type,on",
+                        "messages" => [
+                            "required_if" => ":attribute: Ce champ est obligatoire, si le montant d'honoraire est fixe!",
+
+                        ],
+                    ],
+                ],
+                'order'        => 5,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($conventionsDataType, 'created_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'timestamp',
+                'display_name' => 'Créé le',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 20,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($conventionsDataType, 'updated_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'timestamp',
+                'display_name' => 'Modifiée le',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 21,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($conventionsDataType, 'deleted_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'timestamp',
+                'display_name' => 'Supprimé le',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 23,
+            ])->save();
+        }
+        /*
+        |--------------------------------------------------------------------------
+        | Honoraires
+        |--------------------------------------------------------------------------
+        */
+        $honorairesDataType = DataType::where('slug', 'honoraires')->firstOrFail();
+        $dataRow = $this->dataRow($honorairesDataType, 'id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'hidden',
+                'display_name' => 'id',
+                'required'     => 1,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 1,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'convention_id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Convention',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "display"       => [
+                        'width' => 12,
+                    ],
+                    "validation" => [
+                        "rule" => "required",
+                        "messages" => [
+                            "required" => ":attribute: Ce champ est obligatoire.",
+                        ],
+                    ],
+                ],
+                'order'        => 2,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'min_crc');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Min Créance',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "step"=> 0.01,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 3,
+                    ],
+                    "validation" => [
+                        "rule" => "required",
+                        "messages" => [
+                            "required" => ":attribute: Ce champ est obligatoire!",
+                        ],
+                    ],
+                ],
+                'order'        => 4,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'max_crc');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Max Créance',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description"   => "Vous pouvez laisser ce champs vide, si aucune valeur",
+                    "step"=> 0.01,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 3,
+                    ],
+                ],
+                'order'        => 5,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'percent');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Pourcentage',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "step"=> 0.01,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 2,
+                    ],
+                    "validation" => [
+                        "rule" => "required",
+                        "messages" => [
+                            "required" => ":attribute: Ce champ est obligatoire!",
+                        ],
+                    ],
+                ],
+                'order'        => 6,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'min');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Min Honoraires',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "step"=> 0.01,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 7,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'max');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Max Honoraires',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "step"=> 0.01,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 8,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'created_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'timestamp',
+                'display_name' => 'Créé le',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 11,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'updated_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'timestamp',
+                'display_name' => 'Modifié le',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 12,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'deleted_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'timestamp',
+                'display_name' => 'Supprimé le',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 13,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'honoraire_belongsto_convention_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'relationship',
+                'display_name' => 'Convention',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "scope" => "percent",
+                    "model"         => "App\\Convention",
+                    "table"         => "conventions",
+                    "type"          => "belongsTo",
+                    "column"        => "convention_id",
+                    "key"           => "id",
+                    "label"         => "name",
+                    "pivot_table"   => "attachements",
+                    "pivot"         => "0",
+                    "taggable"      => "0",
+                    "display" => [
+                        'width' => 12,
+                    ],
+                ], 
+                'order'        => 3,
+            ])->save();
+        }
+        /*
+        |--------------------------------------------------------------------------
+        | Modalites
+        |--------------------------------------------------------------------------
+        */
+        $modalitesDataType = DataType::where('slug', 'modalites')->firstOrFail();
+        $dataRow = $this->dataRow($modalitesDataType, 'id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'hidden',
+                'display_name' => 'id',
+                'required'     => 1,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 1,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'convention_id');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Convention',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "display"       => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 2,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'bill_type');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'select_dropdown',
+                'display_name' => 'Type de Facture',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Type de la facture",
+                    "default"=> "option1",
+                    "options"=> [
+                        "option1"=> "FACTURE",
+                        "option2"=> "NOTE D'HONORAIRES",
+                        "option3"=> "NOTE DE FRAIS"
+                    ],
+                    "display" => [
+                        'width' => 3,
+                    ],
+                    "validation" => [
+                        "rule" => "required",
+                        "messages"=>[
+                            "required" => ":attribute: Ce champ est obligatoire.",
+                        ],
+                    ],
+                ],
+                'order'        => 4,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'stade_name');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'select_dropdown',
+                'display_name' => 'Stade',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "description" => "Le stade à la fin du quel une facture sera automatiquement générée",
+                    "validation" => [
+                        "rule" => "required",
+                        "messages" => [
+                            "required" => ":attribute: Ce champ est obligatoire.",
+                        ],
+                    ],
+                    "default" => "option1",
+                    "options" => [
+                    "option1"   => "A0: Acceptation Dossier (M.E.D)",
+                    "option2"   => "A1: Audience",
+                    "option3"   => "A2: Notification et Exécution CI",
+                    "option4"   => "A3: Expertise Comptable",
+                    "option5"   => "A4: Jugement A.D.D",
+                    "option6"   => "A5: Jugement DEFINITIF",
+                    "option7"   => "A6: Demande Notification et Execution (F.C)",
+                    "option8"   => "A7: Adjudication",
+                    "option9"   => "B0: Acceptation Dossier",
+                    "option10"  => "B1: Mise en demeure (art 114 CC)",
+                    "option11"  => "B2: Notification",
+                    "option12"  => "B3: Procédure Curateur",
+                    "option13"  => "B4: Saisine du juge",
+                    "option14"  => "B5: Expertise Mobilière",
+                    "option15"  => "B7: Vente (F.C)",
+                    "option16"  => "C0: Acceptation Dossier",
+                    "option17"  => "C1: Dépôt CI",
+                    "option18"  => "C2: Notification et Exécution CI",
+                    "option19"  => "C3: Procédure Curateur",
+                    "option20"  => "C4: Publications CI",
+                    "option21"  => "C5: Expertise Immobilière",
+                    "option22"  => "C6: Rapport Expertise Immobilière",
+                    "option23"  => "C7: Vente Immobilière",
+                    ],
+                    "display"   => [
+                        'width' => 3,
+                    ],
+
+                ],
+                'order'        => 5,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'name');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'text',
+                'display_name' => 'Mission',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "description" => "Déscription de la mission sur la facture",
+                    "validation"=> [
+                        "rule"=>"required|unique:modalites,name,id",
+                        "messages"=>[
+                            "required"=>":attribute: Ce champ est obligatoire.",
+                            "unique"=>":attribute: Cette Mission existe déjà. Choisisez un autre nom!",
+                        ],
+                    ],
+                    "display"      => [
+                        'width' => 6,
+                    ],
+                ],
+                'order'        => 6,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'type');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'checkbox',
+                'display_name' => 'Montant Fixe ou Pourcentage',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "description" => "Honoraire de la mission: Montant Fixe ou Pourcentage de la créance",
+                    "on" => "Montant Fixe",
+                    "off" => "Pourcentage",
+                    "display" => [
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 7,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'amount');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Valeur',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Valeur d'honoraire de la mission: Montant Fixe ou Pourcentage",
+                    "step"=> 0.01,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 2,
+                    ],
+                    "validation" => [
+                        "rule" => "required",
+                        "messages" => [
+                            "required" => ":attribute: Ce champ est obligatoire!",
+                        ],
+                    ],
+                ],
+                'order'        => 8,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'days');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'Jours',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Nombre de jours avant la date d'échéance de la facture. Vous pouvez laisser ce champs vide, la valeur par défault de 15 jours sera utilisée!",
+                    "step"=> 1,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 1,
+                    ],
+                ],
+                'order'        => 9,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'tax');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'number',
+                'display_name' => 'TVA%',
+                'required'     => 0,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details' => [
+                    "description" => "Taxe sur la Valeur Ajoutée. Vous pouvez laisser ce champs vide, si aucune TVA!",
+                    "step"=> 0.01,
+                    "min"=> 0,
+                    "display" => [
+                        'width' => 1,
+                    ],
+                ],
+                'order'        => 10,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'created_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'timestamp',
+                'display_name' => 'Créé le',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 20,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'updated_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'timestamp',
+                'display_name' => 'Modifié le',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 21,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'deleted_at');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'timestamp',
+                'display_name' => 'Supprimé le',
+                'required'     => 0,
+                'browse'       => 0,
+                'read'         => 0,
+                'edit'         => 0,
+                'add'          => 0,
+                'delete'       => 0,
+                'details'      => '',
+                'order'        => 22,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($modalitesDataType, 'modalite_belongsto_convention_relationship');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'relationship',
+                'display_name' => 'Convention',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "model"         => "App\\Convention",
+                    "table"         => "conventions",
+                    "type"          => "belongsTo",
+                    "column"        => "convention_id",
+                    "key"           => "id",
+                    "label"         => "name",
+                    "pivot_table"   => "attachements",
+                    "pivot"         => "0",
+                    "taggable"      => "0",
+                    "display" => [
+                        'width' => 6,
+                    ],
+                ], 
+                'order'        => 3,
+            ])->save();
+        }
+
 
         /*
         |--------------------------------------------------------------------------

@@ -6,6 +6,7 @@ use App\Lawsuit;
 
 use Carbon\Carbon;
 use App\Invoices\Bill;
+use Spatie\Regex\Regex;
 use Illuminate\Support\Str;
 use TCG\Voyager\Models\Role;
 use Illuminate\Support\Facades\Auth;
@@ -39,7 +40,10 @@ class Billing extends Model
     {
         return "Facture {$this->number}/{$this->serie}";
     }
-    
+    private function getLastBillingNumber()
+    {
+        return Billing::query()->max('number');
+    }
     public $additional_attributes = ['name'];
 
     public function scopeCurrentUser($query)
@@ -47,27 +51,17 @@ class Billing extends Model
         $roleClient = Role::where('name', 'Client')->firstOrFail();
         if (Auth::user()->role_id == $roleClient->id) {
             return $query->whereIn('id', Auth::user()->lawsuits->billings->pluck('id'));
-        }else{
+        } else {
             return $query;
         }
     }
+
     protected static function boot()
     {
         parent::boot();
 
         static::saving(function ($billing){
 
-
-            $paid_at=$billing->paid_at;
-
-            $type=$billing->type;
-            $tax=$billing->tax;
-            $creance=$billing->creance;
-            $ice=$billing->ice;
-
-            $number=$billing->number;
-            $date=$billing->date;
-            $days=$billing->days;
 
             $item1=$billing->item1;
             $unit1=$billing->unit1;
@@ -90,26 +84,25 @@ class Billing extends Model
             $price4=$billing->price4;
 
             $note=$billing->note;
-            $datfacture= $date ? Carbon::parse($date) : now();
-            $site_LOGO = setting('site.logo', '');
+
+
+            // $site_LOGO = public_path(setting('site.logo', ''));
             $logo= public_path('img/logo.png');
-            
 
-
-            $lawsuit=Lawsuit::where('id', $billing->lawsuit_id)->firstOrFail();
+            $lawsuit=$billing->lawsuit;
             $clientname=$lawsuit->client->name;
-
             $address=$lawsuit->client->adress;
             $cp=$lawsuit->client->cp;
             $city=$lawsuit->client->city;
             $country=$lawsuit->client->country;
-
             $phone=$lawsuit->client->phone;
-            $adverseName=$lawsuit->opponent->name;
+            $ice = $lawsuit->client->ice;
             $caseNum=$lawsuit->caseNum;
-            
-            // Make sure the invoice pdf file does not exist, if it does, DELETE IT! & create a new one!
-            if(json_decode($billing->pdf) !== null){
+            $adverseName=$lawsuit->opponent->name;
+            //String creance 
+            $creance = $lawsuit->creance;          
+            // Make sure the invoice pdf file does not exist(we are creating a new one), if it does(we are modifing an old one), DELETE IT! & create a new one!
+            if(json_decode($billing->pdf) != null){
                 foreach(json_decode($billing->pdf) as $file){
                     if (Storage::disk(config('voyager.storage.disk'))->exists($file->download_link)) {
                         Storage::disk(config('voyager.storage.disk'))->delete($file->download_link);
@@ -149,24 +142,25 @@ class Billing extends Model
                 ];
             }
             $client=[
-                    'name' => $clientname,
-                    'address' => $address." ".$cp." ".$city."-".$country,
-                    'phone' => $phone,
-                    'code' => $ice,
-                    'custom_fields' => $custom_fields,
+                'name' => $clientname,
+                'address' => $address." ".$cp." ".$city."-".$country,
+                'phone' => $phone,
+                'code' => $ice,
+                'custom_fields' => $custom_fields,
             ];
-
             $invoiceClient = new Party($client);
-
-            $invoiceName = '';
-            if($type=="option1"){
+            if (isset($billing->type) && $billing->type!=null) {
+                if($billing->type=="option1"){
+                    $invoiceName = 'FACTURE';
+                }elseif($billing->type=="option2"){
+                    $invoiceName = 'NOTE D\'HONORAIRES';     
+                }elseif($billing->type=="option3"){
+                    $invoiceName = 'NOTE DE FRAIS';
+                }       
+            }elseif($billing->type==null){
                 $invoiceName = 'FACTURE';
-            }elseif($type=="option2"){
-                $invoiceName = 'NOTE D\'HONORAIRES';     
-            }elseif($type=="option3"){
-                $invoiceName = 'NOTE DE FRAIS';
-            }     
-            
+                $billing->type = 'option1';
+            } 
             $items = array();
             if ($item1 != null && $price1 != null) {
                 $invoice_items1 = (new InvoiceItem())->title($item1)->pricePerUnit($price1);
@@ -179,7 +173,7 @@ class Billing extends Model
                 if ($unit1 != null) {
                     $invoice_items1 =(new InvoiceItem())->title($item1)->pricePerUnit($price1)->units($unit1);
                 }
-            array_push($items, $invoice_items1);
+                array_push($items, $invoice_items1);
             }
             if ($item2 != null && $price2 != null) {
                 $invoice_items2 = (new InvoiceItem())->title($item2)->pricePerUnit($price2);
@@ -192,7 +186,7 @@ class Billing extends Model
                 if ($unit2 != null) {
                     $invoice_items2 = (new InvoiceItem())->title($item2)->pricePerUnit($price2)->units($unit2);
                 }
-            array_push($items, $invoice_items2);
+                array_push($items, $invoice_items2);
             }
             if ($item3 != null && $price3 != null) {
                 $invoice_items3 = (new InvoiceItem())->title($item3)->pricePerUnit($price3);
@@ -205,7 +199,7 @@ class Billing extends Model
                 if ($unit3 != null) {
                     $invoice_items3 = (new InvoiceItem())->title($item3)->pricePerUnit($price3)->units($unit3);
                 }
-            array_push($items, $invoice_items3);
+                array_push($items, $invoice_items3);
             }
             if ($item4 != null && $price4 != null) {
                 $invoice_items4 = (new InvoiceItem())->title($item4)->pricePerUnit($price4);
@@ -218,53 +212,109 @@ class Billing extends Model
                 if ($unit4 != null) {
                     $invoice_items4 = (new InvoiceItem())->title($item4)->pricePerUnit($price4)->units($unit4);
                 }
-            array_push($items, $invoice_items4);
+                array_push($items, $invoice_items4);
             }
-            if (isset($billing->serie) && $billing->serie!=null) {
-                $serie=$billing->serie;
-            }elseif($billing->serie==null){
-                $serie=date('Y');
+            if(isset($billing->days) && $billing->days != null){
+                $days = $billing->days;
+            }elseif($billing->days==null){
+                $days=15;
             }
-
+            if(isset($billing->date) && $billing->date != null){
+                $datfacture = $billing->date;
+            }elseif($billing->date==null){
+                $datfacture=now();
+            }
+            if(isset($billing->serie) && $billing->serie!=null) {
+                $serie = $billing->serie;
+            }elseif($billing->serie==null) {
+                // $lastserie = Billing::where('date', '<=', $datfacture)->max('serie');      
+                $lastserie= Billing::where('lawsuit_id', $billing->lawsuit_id)->max('serie');
+                if($lastserie!=null){
+                    if (Regex::matchAll('/2021|2[0-2][0-9][0-9]/', (string)$lastserie)->hasMatch()) {
+                        if ($datfacture != now()) {
+                            $serie = Carbon::parse($datfacture)->format('Y');
+                        } else {
+                            $serie = date('Y');
+                        }
+                    }else {
+                        $serie = $lastserie;
+                    }
+                }else{
+                    if ($datfacture != now()) {
+                        $serie = Carbon::parse($datfacture)->format('Y');
+                    } else {
+                        $serie = date('Y');
+                    }
+                }
+            }
+            if(isset($billing->number) && $billing->number!=null) {
+                $number = $billing->number;
+            }elseif($billing->number==null){
+                if ($billing->getLastBillingNumber()==null) {
+                    $number=1;
+                }elseif($billing->getLastBillingNumber()>0) {
+                    $previousBills=Billing::where('serie',$serie)->where('date','<=',$datfacture)->max('number');
+                    $nextBills=Billing::where('serie',$serie)->where('date','>=',$datfacture)->min('number');
+                    if (Regex::matchAll('/2021|2[0-2][0-9][0-9]/', (string)$serie)->hasMatch()) {
+                        if ($serie!=date('Y')) {
+                            if ($previousBills==null && $nextBills==null) {
+                                $number = 1;
+                            }else{
+                                if ($previousBills!=null && $nextBills==null) {
+                                    $number = $previousBills + 1;
+                                }
+                                if ($previousBills==null && $nextBills!=null) {
+                                    $number = $nextBills - 1 !=0 ? $nextBills - 1 : 1;
+                                }
+                                if ($previousBills!=null && $nextBills!=null) {
+                                    $number = min([$previousBills,$nextBills]) + 1;
+                                }
+                            }
+                        }else {
+                            $thisBills = Billing::where('serie', $serie)->where('date', '<=', $datfacture)->max('number');
+                            $number = $thisBills + 1;
+                        }
+                    }else {
+                        $number = $previousBills + 1;
+                    }
+                }
+            }
             $invoice = Bill::make($invoiceName)
                 ->template('bill')
                 ->buyer($invoiceClient)
                 ->sequence($number)
                 ->series($serie)
                 ->date($datfacture)
-                ->addItems($items)
                 ->payUntilDays($days)
+                ->addItems($items)
                 ->logo($logo);
-   
             if($note != null){
                 $invoice->notes($note);
             }  
-            if($tax != null){
-                $invoice->taxRate($tax);
-            }  
-
+            if(isset($billing->tax) && $billing->tax != null){
+                $invoice->taxRate($billing->tax);
+            }
             $fileRealName = 'Facture' . ' ' . $number . '/' . $serie;
             $filename = Str::random(20);
             $path = Billing::FOLDER.DIRECTORY_SEPARATOR.now()->format('FY').DIRECTORY_SEPARATOR;
-            
-            // Make sure the filename does not exist, if it does, just regenerate
+            //Make sure the filename does not exist, if it does, just regenerate
             while (Storage::disk(config('voyager.storage.disk'))->exists($path.$filename.'.pdf')) {
                 $filename = Str::random(20);
             }
-            
-
             $invoice->filename($path.$filename);
-            // You should save generated invoice to configured disk before been able to access the $invoice->total_amount  
+            //The generated invoice should be saved to configured disk before been able to access the $invoice->total_amount  
             $invoice->save(config('voyager.storage.disk'));
-
             $billing->total_amount=$invoice->total_amount;
-            
             $invoicePdf=[
                 'download_link' => $path.$filename.'.pdf',
                 'original_name' => $fileRealName,
             ];
+            //Saving the auto generated fields to the DataBase
             $billing->pdf=json_encode(array($invoicePdf));
-
+            $billing->serie=$serie;
+            $billing->number=$number;
+            $billing->date=$datfacture;
+            $billing->days=$days;
         });
     }
 }

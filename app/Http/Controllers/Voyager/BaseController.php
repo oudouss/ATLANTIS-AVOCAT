@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers\Voyager;
 
+use App\Stade;
 use Exception;
-use Illuminate\Database\Eloquent\SoftDeletes; // import string class
-use Illuminate\Http\Request; // import string class
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use App\Attachement;
 use Illuminate\Support\Str;
-use TCG\Voyager\Database\Schema\SchemaManager;
+use TCG\Voyager\Facades\Voyager;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataDeleted;
-use TCG\Voyager\Events\BreadDataRestored;
 use TCG\Voyager\Events\BreadDataUpdated;
+use TCG\Voyager\Events\BreadDataRestored;
 use TCG\Voyager\Events\BreadImagesDeleted;
-use TCG\Voyager\Facades\Voyager;
-use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser; // import voyager class
+use TCG\Voyager\Database\Schema\SchemaManager;
+use Illuminate\Http\Request; // import string class
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
+use Illuminate\Database\Eloquent\SoftDeletes; // import string class
+use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser; // import voyager class
 
 class BaseController extends VoyagerBaseController
 {
@@ -410,10 +412,39 @@ class BaseController extends VoyagerBaseController
         event(new BreadDataUpdated($dataType, $data));
 
         if (auth()->user()->can('browse', app($dataType->model_name))) {
-            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+            if ($dataType->slug=='stades' || $dataType->slug=='pieces-jointes') {
+                if ($dataType->slug=='stades') {
+                    $stade=Stade::findOrfail($id);
+                    if ($stade) {
+                        $affaireId=$stade->lawsuit->id;
+                        if (redirect()->back()==redirect()->route("voyager.affaires.show", $affaireId)) {
+                            $redirect = redirect()->back();
+                        }else {
+                            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+                        }
+                    }
+                }
+                if ($dataType->slug=='pieces-jointes') {
+                    $attachement=Attachement::findOrfail($id);
+                    if ($attachement) {
+                        $affaireId=$attachement->lawsuit->id;
+                        if (redirect()->back()==redirect()->route("voyager.affaires.show", $affaireId)) {
+                            $redirect = redirect()->back();
+                        }else {
+                            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+                        }
+                    }
+                }
+            }else {
+                $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+
+            }
         } else {
             $redirect = redirect()->back();
         }
+
+
+// dd(redirect()->back()==redirect()->route("voyager.affaires.show", $affaireId));
 
         return $redirect->with([
             'message' => __('voyager::generic.successfully_updated') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
@@ -493,7 +524,33 @@ class BaseController extends VoyagerBaseController
 
         if (!$request->has('_tagging')) {
             if (auth()->user()->can('browse', $data)) {
-                $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+                if ($dataType->slug=='stades') {
+                    $id = $data->id;
+                    $stade=Stade::findOrfail($id);
+                    if ($stade) {
+                        $affaireId=$stade->lawsuit->id;
+                        if (redirect()->back()==redirect()->route("voyager.affaires.show", $affaireId)) {
+                            $redirect = redirect()->back();
+                        }else {
+                            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+                        }
+                    }
+                }
+                if ($dataType->slug=='pieces-jointes') {
+                    $id=$data->id;
+                    $attachement=Attachement::findOrfail($id);
+                    if ($attachement) {
+                        $affaireId=$attachement->lawsuit->id;
+                        if (redirect()->back()==redirect()->route("voyager.affaires.show", $affaireId)) {
+                            $redirect = redirect()->back();
+                        }else {
+                            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+                        }
+                    }
+                }
+                else {
+                    $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+                }
             } else {
                 $redirect = redirect()->back();
             }
@@ -502,7 +559,7 @@ class BaseController extends VoyagerBaseController
                 'message' => __('voyager::generic.successfully_added_new') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
                 'alert-type' => 'success',
             ]);
-        } else {
+        }else{
             return response()->json(['success' => true, 'data' => $data]);
         }
     }
@@ -564,7 +621,11 @@ class BaseController extends VoyagerBaseController
         }
         
         if (auth()->user()->can('browse', app($dataType->model_name))) {
-            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+            if ($dataType->slug=='stades' || $dataType->slug=='pieces-jointes') {
+                $redirect = redirect()->back();
+            }else {
+                $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+            }
         } else {
             $redirect = redirect()->back();
         }

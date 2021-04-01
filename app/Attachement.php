@@ -26,10 +26,14 @@ class Attachement extends Model
     public function scopeMyAttachements($query)
     {
         $Attachement = new Attachement();
-        if (Auth::user()->can('edit', $Attachement)) {
+        if (Auth::user()->can('deleted', $Attachement)) {
             return $query;
-        } else {
-            return $query->whereIn('lawsuit_id', Auth::user()->lawsuits->pluck('id'));
+        }else {
+            if (Auth::user()->can('edit', $Attachement)) {
+                return $query->whereIn('lawsuit_id', Lawsuit::whereNull('deleted_at')->pluck('id'))->whereNull('deleted_at');
+            } else {
+                return $query->whereIn('lawsuit_id', Auth::user()->lawsuits()->whereNull('deleted_at')->pluck('id'))->whereNull('deleted_at');
+            }
         }
     }
 }

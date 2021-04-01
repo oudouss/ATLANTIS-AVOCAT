@@ -49,7 +49,6 @@ class PermissionRoleTableSeederCustom extends Seeder
                         'browse_admin',
                         'browse_users',
                         'read_users',
-                        'edit_users',
                         'add_users',
                         'browse_contacts',
                         'read_contacts',
@@ -62,9 +61,11 @@ class PermissionRoleTableSeederCustom extends Seeder
                         'add_lawsuits',
                         'delete_lawsuits',
                         'read_stades',
+                        'browse_stades',
                         'edit_stades',
                         'add_stades',
                         'delete_stades',
+                        'browse_attachements',
                         'read_attachements',
                         'edit_attachements',
                         'add_attachements',
@@ -79,6 +80,21 @@ class PermissionRoleTableSeederCustom extends Seeder
                         'edit_billings',
                         'add_billings',
                         'delete_billings',
+                        'browse_conventions',
+                        'read_conventions',
+                        'edit_conventions',
+                        'add_conventions',
+                        'delete_conventions',
+                        'browse_honoraires',
+                        'read_honoraires',
+                        'edit_honoraires',
+                        'add_honoraires',
+                        'delete_honoraires',
+                        'browse_modalites',
+                        'read_modalites',
+                        'edit_modalites',
+                        'add_modalites',
+                        'delete_modalites',
                     ]);
                 });
                 $role->permissions()->sync($permissionsFiltered->pluck('id')->all());
@@ -107,7 +123,6 @@ class PermissionRoleTableSeederCustom extends Seeder
                         'delete_events',
                         'browse_billings',
                         'read_billings',
-                        'edit_billings',
                         'add_billings',
                     ]);
                 });
@@ -127,6 +142,18 @@ class PermissionRoleTableSeederCustom extends Seeder
                         'read_billings',
                         'edit_billings',
                         'add_billings',
+                        'browse_conventions',
+                        'read_conventions',
+                        'edit_conventions',
+                        'add_conventions',
+                        'browse_honoraires',
+                        'read_honoraires',
+                        'edit_honoraires',
+                        'add_honoraires',
+                        'browse_honoraires',
+                        'read_modalites',
+                        'edit_modalites',
+                        'add_modalites',
                     ]);
                 });
                 $role->permissions()->sync($permissionsFiltered->pluck('id')->all());
