@@ -146,7 +146,7 @@ class Stade extends Model
                                         $lawsuitBillsItems3=Billing::where('lawsuit_id', $stade->lawsuit_id)->pluck('item3')->toArray();
                                         $lawsuitBillsItems4=Billing::where('lawsuit_id', $stade->lawsuit_id)->pluck('item4')->toArray();
                                         $billingDate= now();
-                                        if ($modalite->type==0) {
+                                        if ($modalite->type==0 && $honoraireTotal!=null) {
                                             $billingAmount = (float) (($honoraireTotal * (float) $modalite->amount) / 100);
                                         } elseif ($modalite->type==1) {
                                             $billingAmount = (float) $modalite->amount;

@@ -231,7 +231,7 @@ class Lawsuit extends Model
                                     $lawsuitBillsItems2=Billing::where('lawsuit_id', $lawsuit->id)->pluck('item2')->toArray();
                                     $lawsuitBillsItems3=Billing::where('lawsuit_id', $lawsuit->id)->pluck('item3')->toArray();
                                     $lawsuitBillsItems4=Billing::where('lawsuit_id', $lawsuit->id)->pluck('item4')->toArray();
-                                    if ($modalite->type==0) {
+                                    if ($modalite->type==0 && $honoraireTotal!=null) {
                                         $billingAmount = (float) (($honoraireTotal * (float) $modalite->amount) / 100);
                                     } elseif ($modalite->type==1) {
                                         $billingAmount = (float) $modalite->amount;
