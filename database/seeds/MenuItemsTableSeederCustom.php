@@ -75,7 +75,7 @@ class MenuItemsTableSeederCustom extends Seeder
 
             $menuItem->fill([
                 'target'     => '_self',
-                'icon_class' => 'voyager-folder',
+                'icon_class' => 'voyager-hammer',
                 'color'      => '#000000',
                 'parent_id'  => null,
                 'order'      => 7,
@@ -90,7 +90,7 @@ class MenuItemsTableSeederCustom extends Seeder
 
             $menuItem->fill([
                 'target'     => '_self',
-                'icon_class' => 'voyager-archive',
+                'icon_class' => 'voyager-milestone',
                 'color'      => null,
                 'parent_id'  => null,
                 'order'      => 8,
@@ -135,7 +135,7 @@ class MenuItemsTableSeederCustom extends Seeder
 
             $menuItem->fill([
                 'target'     => '_self',
-                'icon_class' => 'voyager-file-text',
+                'icon_class' => 'voyager-documentation',
                 'color'      => '#000000',
                 'parent_id'  => null,
                 'order'      => 10,
@@ -150,7 +150,7 @@ class MenuItemsTableSeederCustom extends Seeder
 
             $menuItemFacturation->fill([
                 'target'     => '_self',
-                'icon_class' => 'voyager-logbook',
+                'icon_class' => 'voyager-params',
                 'color'      => '#000000',
                 'parent_id'  => null,
                 'order'      => 11,
@@ -165,7 +165,7 @@ class MenuItemsTableSeederCustom extends Seeder
                 
             $menuItem->fill([
                 'target'     => '_self',
-                'icon_class' => 'voyager-receipt',
+                'icon_class' => 'voyager-certificate',
                 'color'      => '#000000',
                 'parent_id'  => $menuItemFacturation->id,
                 'order'      => 1,                  
@@ -195,10 +195,85 @@ class MenuItemsTableSeederCustom extends Seeder
                 
             $menuItem->fill([
                 'target'     => '_self',
-                'icon_class' => 'voyager-params',
+                'icon_class' => 'voyager-logbook',
                 'color'      => '#000000',
                 'parent_id'  => $menuItemFacturation->id,
                 'order'      => 3,                  
+            ])->save();
+
+            $menuItemAutomatisation = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Automatisation',
+                'url'     => '',
+                'route'   => null,
+            ]);
+
+            $menuItemAutomatisation->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-rocket',
+                'color'      => '#000000',
+                'parent_id'  => null,
+                'order'      => 12,
+            ])->save();
+     
+            $menuItem = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Procédures',
+                'url'     => '',
+                'route'   => 'voyager.procedures.index',
+            ]);
+
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-receipt',
+                'color'      => '#000000',
+                'parent_id'  => $menuItemAutomatisation->id,
+                'order'      => 1,                  
+            ])->save();
+
+            $menuItem = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Modèles des Affaires',
+                'url'     => '',
+                'route'   => 'voyager.lawsuit-models.index',
+            ]);
+
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-file-text',
+                'color'      => '#000000',
+                'parent_id'  => $menuItemAutomatisation->id,
+                'order'      => 2,                  
+            ])->save();
+
+            $menuItem = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Titres des Stades',
+                'url'     => '',
+                'route'   => 'voyager.stade-names.index',
+            ]);
+
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-list',
+                'color'      => '#000000',
+                'parent_id'  => $menuItemAutomatisation->id,
+                'order'      => 3,                  
+            ])->save();
+
+            $menuItem = MenuItem::firstOrNew([
+                'menu_id' => $menu->id,
+                'title'   => 'Stades du Modèle',
+                'url'     => '',
+                'route'   => 'voyager.model-stades.index',
+            ]);
+
+            $menuItem->fill([
+                'target'     => '_self',
+                'icon_class' => 'voyager-list-add',
+                'color'      => '#000000',
+                'parent_id'  => $menuItemAutomatisation->id,
+                'order'      => 4,                  
             ])->save();
         }
     }

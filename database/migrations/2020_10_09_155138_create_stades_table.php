@@ -16,7 +16,6 @@ class CreateStadesTable extends Migration
         Schema::create('stades', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('lawsuit_id')->unsigned();
-            $table->string('name');
             $table->date('date');
             $table->boolean('state')->default(0);
             $table->longText('observation')->nullable();

@@ -19,11 +19,10 @@ class CreateLawsuitsTable extends Migration
             $table->bigInteger('opponent_id')->unsigned();
             $table->string('caseType')->nullable();
             $table->string('caseNum');
-            $table->string('fileNum')->unique();
-            $table->string('procedure');
+            $table->string('fileNum');
             $table->string('state');
             $table->date('acceptation');
-            $table->boolean('curateur')->default(0);
+            $table->boolean('auto_billing')->default(0);
             $table->decimal('creance', 20, 2)->nullable();
             $table->date('classement')->nullable();
             $table->date('archivage')->nullable();

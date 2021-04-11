@@ -35,7 +35,9 @@
 @section('content')
 <div class="page-content read container-fluid">
     <div class="row">
-        @if ($dataTypeContent->procedure=='option1'|| $dataTypeContent->procedure=='option2' ||$dataTypeContent->procedure=='option4') 
+        {{-- @if ($dataTypeContent->procedure=='option1'|| $dataTypeContent->procedure=='option2' ||$dataTypeContent->procedure=='option4') --}}
+
+        @if ($dataTypeContent->stades->count()>0)
             <div class="col-md-8">
                 <div class="panel panel-bordered" style="padding-bottom:5px;">
                     <!-- form start -->
@@ -137,14 +139,14 @@
             <div class="col-md-4">
                 <div class="panel panel panel-bordered panel-default">
                     <div class="panel-heading" style="border-bottom:0;">
-                        <h3 class="panel-title"><i class="voyager-archive"></i>&nbsp;Stades</h3>
+                        <h3 class="panel-title"><i class="voyager-milestone"></i>&nbsp;Stades</h3>
                     </div>
                     <div class="panel-body">
                         @foreach ( $dataTypeContent->stades as $stade)
                             <!-- stade -->
                             <div>    
                                 @can('edit', $stade)
-                                <a role="button"  data-toggle="modal" data-target="#stadeEditModal" data-stade="{{$stade->id}}" data-name="{{$stade->name}}"data-date="{{$stade->date}}" data-state="{{$stade->state}}" data-observation="{{$stade->observation}}">
+                                <a role="button"  data-toggle="modal" data-target="#stadeEditModal" data-stade="{{$stade->id}}" data-name="{{$stade->stade_name_id}}"data-date="{{$stade->date}}" data-state="{{$stade->state}}" data-observation="{{$stade->observation}}">
                                 @endcan
                                 <strong ><u class="text-truncate">{{ $stade->short}}</u>&nbsp;</strong>
                                 @if($stade->state)
@@ -159,7 +161,10 @@
                             </div>
                             <!-- stade end-->
                             <div style="width:auto; height:auto; clear:both; display:block; padding:2px; margin:2px;">
-                                <i class="voyager-calendar"> </i> <b> &nbsp; {{ $stade->date }}</b>
+                                <i class="voyager-calendar"> </i> <b> &nbsp; {{('Date')}}: {{ Carbon\Carbon::parse($stade->date)->format('d-m-Y') }}</b>
+                            </div>    
+                            <div style="width:auto; height:auto; clear:both; display:block; padding:2px; margin:2px;">
+                                <i class="voyager-calendar"> </i> <b> &nbsp; {{('Date Limite')}}: {{ $stade->dead_line }}</b>
                             </div>    
                             <!-- attachement-->
                             @if(!is_null($stade->attachements))
@@ -337,7 +342,7 @@
 
                 </div>
             </div>
-            
+
         @endif
 
     </div>
@@ -449,7 +454,7 @@
                     {{ method_field('PUT') }}
                     {{ csrf_field() }}
                     <input type="hidden" name="lawsuit_id" value="{{$dataTypeContent->getKey()}}">
-                    <input id="stadeName" type="hidden" name="name">
+                    <input id="stadeName" type="hidden" name="stade_name_id">
                     <div class="form-group"><!-- date -->
                         <label class="control-label" for="date">Date</label>
                         <input id="stadeDate" type="date" class="form-control" name="date" placeholder="Date">

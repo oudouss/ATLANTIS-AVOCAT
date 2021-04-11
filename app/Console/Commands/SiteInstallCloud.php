@@ -11,7 +11,7 @@ class SiteInstallCloud extends Command
      *
      * @var string
      */
-    protected $signature = 'site:installCloud {--force : Do not ask for user confirmation}';
+    protected $signature = 'site:installCloud {--force : Do not ask for user confirmation} {--auto : Install default setup data for Automatisation & Auto Billing Modules}';
 
     /**
      * The console command description.
@@ -39,9 +39,25 @@ class SiteInstallCloud extends Command
     {
         if ($this->option('force')) {
             $this->proceed();
+            if ($this->option('auto')) {
+                $this->call('site:installAuto', [
+                    '--force' => true,
+                ]);
+                $this->call('site:installAutoBilling', [
+                    '--force' => true,
+                ]);
+            }
         } else {
             if ($this->confirm('This will delete ALL your current data and install the default setup data. Are you sure?')) {
                 $this->proceed();
+                if ($this->option('auto')) {
+                    $this->call('site:installAuto', [
+                        '--force' => true,
+                    ]);
+                    $this->call('site:installAutoBilling', [
+                        '--force' => true,
+                    ]);
+                }
             }
         }
     }

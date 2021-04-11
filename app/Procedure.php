@@ -5,23 +5,24 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Contact extends Model
+class Procedure extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    public $table = 'contacts';
+    public $table = 'procedures';
     protected $guarded = [];
-
+    
     public function lawsuits()
     {
         return $this->hasMany('App\Lawsuit');
     }
-    public function scopeAdversaire($query)
+    public function conventions()
     {
-        return $query->where('category', 'option1');
+        return $this->hasMany('App\Convention');
     }
-    public function scopeClient($query)
+    public function models()
     {
-        return $query->where('category', 'option2');
+        return $this->hasMany('App\LawsuitModel', 'id', 'model_id');
     }
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConventionsTable extends Migration
+class CreateLawsuitModelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateConventionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('conventions', function (Blueprint $table) {
+        Schema::create('lawsuit_models', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('type')->default(0);
-            $table->decimal('amount', 20, 2)->nullable();
+            $table->bigInteger('procedure_id')->unsigned()->nullable();
+            $table->foreign('procedure_id')->references('id')->on('procedures')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
             $table->softDeletes();
+
         });
     }
 
@@ -30,6 +31,6 @@ class CreateConventionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conventions');
+        Schema::dropIfExists('lawsuit_models');
     }
 }

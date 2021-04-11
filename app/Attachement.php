@@ -10,9 +10,9 @@ class Attachement extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = [
-        'lawsuit_id', 'stade_id', 'url',
-    ];
+    protected $guarded = [];
+    public $table = 'attachements';
+
     public function stade()
     {
         return $this->belongsTo('App\Stade');

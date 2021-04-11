@@ -26,6 +26,10 @@ class Convention extends Model
     {
         return $this->hasMany('App\Lawsuit');
     }
+    public function procedure()
+    {
+        return $this->belongsTo('App\Procedure');
+    }
     public function scopePercent($query)
     {
         return $query->where('type',0)->whereNull('deleted_at');

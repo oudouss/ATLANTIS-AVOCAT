@@ -18,5 +18,9 @@ class Modalite extends Model
     {
         return $this->belongsTo('App\Convention', 'convention_id', 'id');
     }
+    public function stade()
+    {
+        return $this->belongsTo('App\StadeName', 'stade_name_id', 'id');
+    }
 
 }

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Billing;
 use App\Lawsuit;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,9 +13,8 @@ class Stade extends Model
 {
     use SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = [
-        'name', 'date', 'state', 'observation', 'lawsuit_id',
-    ];
+    public $table = 'stades';
+    protected $guarded = [];
     public function attachements()
     {
         return $this->hasMany('App\Attachement');
@@ -24,11 +24,37 @@ class Stade extends Model
     {
         return $this->belongsTo('App\Lawsuit', 'lawsuit_id', 'id');
     }
-    
-    public function user()  
+    public function title()
     {
-        return $this->lawsuit->user;
+        return $this->belongsTo('App\StadeName', 'stade_name_id', 'id');
     }
+    
+    public function getNomAttribute()
+    {
+        if ($this->lawsuit) {
+            return "{$this->lawsuit->name} Stade: ".$this->title->name;           
+        }else {
+            return "Pas de résultats.";
+        }
+    }
+    public function getShortAttribute()
+    {
+        if ($this->title) {
+            return $this->title->name;
+        }else {
+            return "Pas de résultats.";
+        }
+    }
+    public function getDeadLineAttribute()
+    {
+        if ($this->title->days!=null) {
+            return Carbon::parse($this->lawsuit->acceptation)->addDays((float) $this->title->days)->format('d-m-Y');
+           
+        }else {
+            return "Pas de date limite.";
+        }
+    }
+    public $additional_attributes = ['nom','short','dead_line'];
 
     public function scopeMyStades($query)
     {
@@ -44,196 +70,112 @@ class Stade extends Model
         }
 
     }
-   
-    public function getNomAttribute()
-    {
-        if ($this->lawsuit) {
-            return "{$this->lawsuit->name} Stade: ".$this->stadenames[$this->name];
-            
-        }else {
-            return "Pas de résultats.";
-
-        }
-    }
-    public function getShortAttribute()
-    {
-
-        return $this->stadenames[$this->name];
-    }
-
-    public $stadenames = [
-        "option1"   => "A0: Acceptation Dossier (M.E.D)",
-        "option2"   => "A1: Audience",
-        "option3"   => "A2: Notification et Exécution CI",
-        "option4"   => "A3: Expertise Comptable",
-        "option5"   => "A4: Jugement A.D.D",
-        "option6"   => "A5: Jugement DEFINITIF",
-        "option7"   => "A6: Demande Notification et Execution (F.C)",
-        "option8"   => "A7: Adjudication",
-        "option9"   => "B0: Acceptation Dossier",
-        "option10"  => "B1: Mise en demeure (art 114 CC)",
-        "option11"  => "B2: Notification",
-        "option12"  => "B3: Procédure Curateur",
-        "option13"  => "B4: Saisine du juge",
-        "option14"  => "B5: Expertise Mobilière",
-        "option15"  => "B7: Vente (F.C)",
-        "option16"  => "C0: Acceptation Dossier",
-        "option17"  => "C1: Dépôt CI",
-        "option18"  => "C2: Notification et Exécution CI",
-        "option19"  => "C3: Procédure Curateur",
-        "option20"  => "C4: Publications CI",
-        "option21"  => "C5: Expertise Immobilière",
-        "option22"  => "C6: Rapport Expertise Immobilière",
-        "option23"  => "C7: Vente Immobilière",
-        ];
-
-    public $additional_attributes = ['nom','short'];
-
+    
     protected static function boot()
     {
         parent::boot();
 
         static::saved(function ($stade){
-            $procedure = $stade->lawsuit->procedure;
-            $curateur = $stade->lawsuit->curateur;
-            $creance = $stade->lawsuit->creance;
-            $convention = $stade->lawsuit->convention;
-            $lawsuitId = $stade->lawsuit_id;
-            $stadesList = Stade::where('lawsuit_id', $lawsuitId)->pluck('name')->toArray();
-            if ($stade->state == 1) {
-                // Assignation (stades name:option1=>option8)
-                if ($procedure == 'option1') {
-                    for ($i = 1; $i < 8; $i++) {
-                        if ($stade->name == 'option'.$i) {
-                            $next = $i + 1;
-                            $nextName = 'option'.$next;
-                            if(!in_array($nextName, $stadesList)){
-                                $stade->create([
-                                    'lawsuit_id' => $lawsuitId,
-                                    'name' => $nextName,
-                                    'date' => now(),
-                                    'state' => 0,
-                                ]);
+            if ($stade->lawsuit->state== "option1") {
+                if ($stade->lawsuit->model_id!=null) {
+                    if ($stade->lawsuit->procedure==$stade->lawsuit->model->procedure) {
+                        $lawsuitModelStades= ModelStade::where("model_id", $stade->lawsuit->model_id)->where("current_id", $stade->stade_name_id)->get();
+                        $lawsuitModelStadesLast= ModelStade::where("model_id", $stade->lawsuit->model_id)
+                                                            ->where("last", 1)
+                                                            ->whereNull("next_id")
+                                                            ->firstOrFail();
+                        $stadesList = Stade::where('lawsuit_id', $stade->lawsuit_id)->pluck('stade_name_id')->toArray();
+                        if ($stade->state == 1) {
+                            if ($stade->stade_name_id==$lawsuitModelStadesLast->current_id) {
+                                $stade->lawsuit->state= "option3";
                             }
-                        }
-                    }
-                // Commandement Immobilier (stades name:option16=>option23)
-                } elseif ($procedure == 'option2') {
-                    for ($i = 16; $i < 23; $i++) {
-                        if ($stade->name == 'option' . $i) {
-                            if ($i == 18) {
-                                if ($stade->lawsuit->curateur==1) {
-                                    $next = $i + 2;
-                                }else{
-                                    $next = $i + 1;
+                            foreach ($lawsuitModelStades as $lawsuitModelStade) {
+                                if ($lawsuitModelStade->next_id!=null) {
+                                    if (!in_array($lawsuitModelStade->next_id, $stadesList)) {
+                                        $stade->create([
+                                            'lawsuit_id' => $stade->lawsuit_id,
+                                            'stade_name_id' => $lawsuitModelStade->next_id,
+                                            'date' => now(),
+                                            'state' => 0,
+                                        ]);
+                                    }
                                 }
-                            }else {
-                                $next = $i + 1;
-                            }
-                            $nextName = 'option'.$next;
-                            if (!in_array($nextName, $stadesList)) {
-                                $stade->create([
-                                    'lawsuit_id' => $lawsuitId,
-                                    'name' => $nextName,
-                                    'date' => now(),
-                                    'state' => 0,
-                                ]);
-                            }                      
-                        }
-                    }
-
-                // Nantissement F.C (stades name:option9=>option15)
-                } elseif ($procedure == 'option4') {
-                    for ($i = 9; $i < 15; $i++) {
-                        if ($stade->name == 'option' . $i) {
-                            if ($i == 11) {
-                                if ($stade->lawsuit->curateur==1) {
-                                    $next = $i + 2;
-                                }else{
-                                    $next = $i + 1;
-                                }
-                            }else {
-                                $next = $i + 1;
-                            }
-                            $nextName = 'option' . $next;
-                            if (!in_array($nextName, $stadesList)) {
-                                $stade->create([
-                                    'lawsuit_id' => $lawsuitId,
-                                    'name' => $nextName,
-                                    'date' => now(),
-                                    'state' => 0,
-                                ]);
                             }
                         }
                     }
                 }
-
-                if ($convention != null && $procedure == $convention->procedure) {
-                    $thisStadeModalites=$convention->modalites()->where('stade_name',$stade->name)->get();
-                    if ($thisStadeModalites->count()>0) {
-                        if ($convention->type==1) {
-                            if ($convention->amount!=null && $convention->amount>=0) {
-                                $honoraireTotal = (float)$convention->amount;
-                            }
-                        }elseif ($convention->type==0) {
-                            $honoraires=$convention->honoraires()->where('min_crc','<=',$creance)->where('max_crc','>=',$creance)->get();
-                            if ($honoraires->count()>0) {
-                                foreach($honoraires as $honoraire){
-                                    $percent=$honoraire->percent;
-                                    if ($creance != null && $creance>=0) {
-                                        $honoraireTotalCalculated = ((float) $creance * (float) $percent) / 100;
-                                    }
-                                    $honoraireTotal = (float)$honoraireTotalCalculated;
-                                    if ($honoraire->min!=null && $honoraire->min>=0) {
-                                        if ($honoraireTotal<(float)$honoraire->min) {
-                                            $honoraireTotal = (float) $honoraire->min;
+                if ($stade->lawsuit->convention!=null) {
+                    if ($stade->lawsuit->procedure==$stade->lawsuit->convention->procedure) {
+                        if ($stade->lawsuit->auto_billing==1) {
+                            if ($stade->state == 1) {
+                                $convention = $stade->lawsuit->convention;
+                                $creance = $stade->lawsuit->creance;
+                                if ($creance != null && $creance>=0) {
+                                    $honoraires = $convention->honoraires()->where('min_crc', $convention->honoraires()->where('min_crc', '<=', $creance)->max('min_crc'))->get();
+                                }
+                                $thisStadeModalites = $convention->modalites()->where('stade_name_id', $stade->stade_name_id)->get();
+                                if ($thisStadeModalites->count()>0) {
+                                    if ($convention->type==1) {
+                                        if ($convention->amount!=null && $convention->amount>=0) {
+                                            $honoraireTotal = (float)$convention->amount;
+                                        }
+                                    } elseif ($convention->type==0) {
+                                        if ($honoraires != null && $honoraires->count()>0) {
+                                            foreach ($honoraires as $honoraire) {
+                                                $percent=$honoraire->percent;
+                                                if ($creance != null && $creance>=0) {
+                                                    $honoraireTotalCalculated = ((float) $creance * (float) $percent) / 100;
+                                                }
+                                                $honoraireTotal = (float)$honoraireTotalCalculated;
+                                                if ($honoraire->min!=null && $honoraire->min>=0) {
+                                                    if ($honoraireTotal<(float)$honoraire->min) {
+                                                        $honoraireTotal = (float) $honoraire->min;
+                                                    }
+                                                }
+                                                if ($honoraire->min!=null && $honoraire->min>=0) {
+                                                    if ($honoraireTotal>(float)$honoraire->max) {
+                                                        $honoraireTotal = (float) $honoraire->max;
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
-                                    if ($honoraire->min!=null && $honoraire->min>=0) {
-                                        if ($honoraireTotal>(float)$honoraire->max) {
-                                            $honoraireTotal = (float) $honoraire->max;
+                                    foreach ($thisStadeModalites as $modalite) {
+                                        $lawsuitBillsItems1=Billing::where('lawsuit_id', $stade->lawsuit_id)->pluck('item1')->toArray();
+                                        $lawsuitBillsItems2=Billing::where('lawsuit_id', $stade->lawsuit_id)->pluck('item2')->toArray();
+                                        $lawsuitBillsItems3=Billing::where('lawsuit_id', $stade->lawsuit_id)->pluck('item3')->toArray();
+                                        $lawsuitBillsItems4=Billing::where('lawsuit_id', $stade->lawsuit_id)->pluck('item4')->toArray();
+                                        $billingDate= now();
+                                        if ($modalite->type==0) {
+                                            $billingAmount = (float) (($honoraireTotal * (float) $modalite->amount) / 100);
+                                        } elseif ($modalite->type==1) {
+                                            $billingAmount = (float) $modalite->amount;
+                                        }
+                                        $billingType= $modalite->bill_type;
+                                        $billingMission= $modalite->name;
+                                        $billingDays= $modalite->days;
+                                        $billingTax= $modalite->tax;
+                                        if (!in_array($billingMission, $lawsuitBillsItems1) && !in_array($billingMission, $lawsuitBillsItems2) && !in_array($billingMission, $lawsuitBillsItems3) && !in_array($billingMission, $lawsuitBillsItems4)) {
+                                            if ($billingTax!=null) {
+                                                $billingTax=(float)$billingTax;
+                                            }
+                                            if ($billingDays!=null) {
+                                                $billingDays=(float)$billingDays;
+                                            }
+                                            Billing::create([
+                                            'lawsuit_id'    => $stade->lawsuit_id,
+                                            'type'          => $billingType,
+                                            'item1'         => $billingMission,
+                                            'days'          => $billingDays,
+                                            'tax'           => $billingTax,
+                                            'date'          => $billingDate,
+                                            'price1'        => $billingAmount,
+                                            ]);
                                         }
                                     }
                                 }
                             }
                         }
-                        $lawsuitBillsItems1=Billing::where('lawsuit_id',$lawsuitId)->pluck('item1')->toArray();
-                        $lawsuitBillsItems2=Billing::where('lawsuit_id',$lawsuitId)->pluck('item2')->toArray();
-                        $lawsuitBillsItems3=Billing::where('lawsuit_id',$lawsuitId)->pluck('item3')->toArray();
-                        $lawsuitBillsItems4=Billing::where('lawsuit_id',$lawsuitId)->pluck('item4')->toArray();
-                        $billingDate= $stade->date;
-                        foreach($thisStadeModalites as $modalite){
-                            if ($modalite->type==0) {
-                                $billingAmount = (float) (($honoraireTotal * (float) $modalite->amount) / 10);
-
-                            }elseif ($modalite->type==1) {
-                                $billingAmount = (float) $modalite->amount;
-
-                            }
-                            $billingType= $modalite->bill_type;
-                            $billingMission= $modalite->name;
-                            $billingDays= $modalite->days;
-                            $billingTax= $modalite->tax;
-                            if (!in_array($billingMission,$lawsuitBillsItems1) && !in_array($billingMission,$lawsuitBillsItems2) && !in_array($billingMission,$lawsuitBillsItems3) && !in_array($billingMission,$lawsuitBillsItems4)) {
-                                # code for creating bill...
-                                if ($billingTax!=null) {
-                                    $billingTax=(float)$billingTax;
-                                }
-                                if ($billingDays!=null) {
-                                    $billingDays=(float)$billingDays;
-                                }
-                                Billing::create([
-                                    'lawsuit_id'    => $lawsuitId,
-                                    'type'          => $billingType,
-                                    'item1'         => $billingMission,
-                                    'days'          => $billingDays,
-                                    'tax'           => $billingTax,
-                                    'date'          => $billingDate,
-                                    'price1'        => $billingAmount,
-                                ]);
-                            }
-                        }
-                            
                     }
                 }
             }

@@ -29,7 +29,7 @@ return [
     'tax_rate'        => 'TVA',
     'total_amount'    => 'Montant T.T.C',
     'pay_until'       => 'Date d\'échéance',
-    'amount_in_words' => 'Montant en lettres',
+    'amount_in_words' => 'La présente est arrêtée à la somme de',
     'notes'           => 'Note',
     'shipping'        => 'Expédition',
 

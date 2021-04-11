@@ -49,8 +49,7 @@ class DataTypesTableSeederCustom extends Seeder
                     "order_column" => null,
                     "order_display_column" => null,
                     "order_direction" => "asc",
-                    "default_search_key" => null,
-                    "scope" => null,
+                    "default_search_key" => "name",
                 ],
             ])->save();
         }
@@ -60,7 +59,7 @@ class DataTypesTableSeederCustom extends Seeder
                 'name'                  => 'lawsuits',
                 'display_name_singular' => 'Affaire',
                 'display_name_plural'   => 'Affaires',
-                'icon'                  => 'voyager-folder',
+                'icon'                  => 'voyager-hammer',
                 'model_name'            => 'App\Lawsuit',
                 'policy_name'           => null,
                 'controller'            => '\App\Http\Controllers\Voyager\BaseController',
@@ -71,7 +70,7 @@ class DataTypesTableSeederCustom extends Seeder
                     "order_column" => null,
                     "order_display_column" => null,
                     "order_direction" => "asc",
-                    "default_search_key" => null,
+                    "default_search_key" => "opponent_id",
                     "scope" => "currentUser",
                 ],
             ])->save();
@@ -82,7 +81,7 @@ class DataTypesTableSeederCustom extends Seeder
                 'name'                  => 'stades',
                 'display_name_singular' => 'Stade',
                 'display_name_plural'   => 'Stades',
-                'icon'                  => 'voyager-archive',
+                'icon'                  => 'voyager-milestone',
                 'model_name'            => 'App\Stade',
                 'policy_name'           => null,
                 'controller'            => '\App\Http\Controllers\Voyager\BaseController',
@@ -93,7 +92,7 @@ class DataTypesTableSeederCustom extends Seeder
                     "order_column" => null,
                     "order_display_column" => null,
                     "order_direction" => "asc",
-                    "default_search_key" => null,
+                    "default_search_key" => "lawsuit_id",
                     "scope" => "myStades",
                 ],
             ])->save();
@@ -115,7 +114,7 @@ class DataTypesTableSeederCustom extends Seeder
                     "order_column" => null,
                     "order_display_column" => null,
                     "order_direction" => "asc",
-                    "default_search_key" => null,
+                    "default_search_key" => "lawsuit_id",
                     "scope" => "myAttachements",
                 ],
             ])->save();
@@ -148,7 +147,7 @@ class DataTypesTableSeederCustom extends Seeder
                 'name'                  => 'billings',
                 'display_name_singular' => 'Facture',
                 'display_name_plural'   => 'Factures',
-                'icon'                  => 'voyager-file-text',
+                'icon'                  => 'voyager-documentation',
                 'model_name'            => 'App\Billing',
                 'policy_name'           => null,
                 'controller'            => '\App\Http\Controllers\Voyager\BaseController',
@@ -159,7 +158,7 @@ class DataTypesTableSeederCustom extends Seeder
                     "order_column" => null,
                     "order_display_column" => null,
                     "order_direction" => "asc",
-                    "default_search_key" => null,
+                    "default_search_key" => "lawsuit_id",
                     "scope" => "currentUser",
                 ],
             ])->save();
@@ -170,7 +169,7 @@ class DataTypesTableSeederCustom extends Seeder
                 'name'                  => 'conventions',
                 'display_name_singular' => 'Convention',
                 'display_name_plural'   => 'Conventions',
-                'icon'                  => 'voyager-receipt',
+                'icon'                  => 'voyager-certificate',
                 'model_name'            => 'App\Convention',
                 'policy_name'           => null,
                 'controller'            => '\App\Http\Controllers\Voyager\BaseController',
@@ -181,7 +180,7 @@ class DataTypesTableSeederCustom extends Seeder
                     "order_column" => null,
                     "order_display_column" => null,
                     "order_direction" => "asc",
-                    "default_search_key" => null,
+                    "default_search_key" => "name",
                 ],
             ])->save();
         }
@@ -202,7 +201,7 @@ class DataTypesTableSeederCustom extends Seeder
                     "order_column" => null,
                     "order_display_column" => null,
                     "order_direction" => "asc",
-                    "default_search_key" => null,
+                    "default_search_key" => "convention_id",
                 ],
             ])->save();
         }
@@ -212,7 +211,7 @@ class DataTypesTableSeederCustom extends Seeder
                 'name'                  => 'modalites',
                 'display_name_singular' => 'Modalité',
                 'display_name_plural'   => 'Modalités',
-                'icon'                  => 'voyager-params',
+                'icon'                  => 'voyager-logbook',
                 'model_name'            => 'App\Modalite',
                 'policy_name'           => null,
                 'controller'            => '\App\Http\Controllers\Voyager\BaseController',
@@ -223,7 +222,91 @@ class DataTypesTableSeederCustom extends Seeder
                     "order_column" => null,
                     "order_display_column" => null,
                     "order_direction" => "asc",
-                    "default_search_key" => null,
+                    "default_search_key" => "convention_id",
+                ],
+            ])->save();
+        }
+        $dataType = $this->dataType('slug', 'procedures');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'procedures',
+                'display_name_singular' => 'Procédure',
+                'display_name_plural'   => 'Procédures',
+                'icon'                  => 'voyager-receipt',
+                'model_name'            => 'App\Procedure',
+                'policy_name'           => null,
+                'controller'            => '\App\Http\Controllers\Voyager\BaseController',
+                'description'           => null,
+                'generate_permissions'  => 1,
+                'server_side'           => 1,
+                'details'               => [
+                    "order_column" => null,
+                    "order_display_column" => null,
+                    "order_direction" => "asc",
+                    "default_search_key" => "name",
+                ],
+            ])->save();
+        }
+        $dataType = $this->dataType('slug', 'lawsuit-models');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'lawsuit_models',
+                'display_name_singular' => 'Modèle de l\'Affaire',
+                'display_name_plural'   => 'Modèles des Affaires',
+                'icon'                  => 'voyager-file-text',
+                'model_name'            => 'App\LawsuitModel',
+                'policy_name'           => null,
+                'controller'            => '\App\Http\Controllers\Voyager\BaseController',
+                'description'           => null,
+                'generate_permissions'  => 1,
+                'server_side'           => 1,
+                'details'               => [
+                    "order_column" => null,
+                    "order_display_column" => null,
+                    "order_direction" => "asc",
+                    "default_search_key" => "procedure_id",
+                ],
+            ])->save();
+        }
+        $dataType = $this->dataType('slug', 'stade-names');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'stade_names',
+                'display_name_singular' => 'Titre du Stade',
+                'display_name_plural'   => 'Titres des Stades',
+                'icon'                  => 'voyager-list',
+                'model_name'            => 'App\StadeName',
+                'policy_name'           => null,
+                'controller'            => '\App\Http\Controllers\Voyager\BaseController',
+                'description'           => null,
+                'generate_permissions'  => 1,
+                'server_side'           => 1,
+                'details'               => [
+                    "order_column" => null,
+                    "order_display_column" => null,
+                    "order_direction" => "asc",
+                    "default_search_key" => "name",
+                ],
+            ])->save();
+        }
+        $dataType = $this->dataType('slug', 'model-stades');
+        if (!$dataType->exists) {
+            $dataType->fill([
+                'name'                  => 'model_stades',
+                'display_name_singular' => 'Stade du Modèle',
+                'display_name_plural'   => 'Stades du Modèle',
+                'icon'                  => 'voyager-list-add',
+                'model_name'            => 'App\ModelStade',
+                'policy_name'           => null,
+                'controller'            => '\App\Http\Controllers\Voyager\BaseController',
+                'description'           => null,
+                'generate_permissions'  => 1,
+                'server_side'           => 1,
+                'details'               => [
+                    "order_column" => null,
+                    "order_display_column" => null,
+                    "order_direction" => "asc",
+                    "default_search_key" => "model_id",
                 ],
             ])->save();
         }

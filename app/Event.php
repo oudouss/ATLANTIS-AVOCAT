@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
   protected $guarded = [];
+  public $table = 'events';
 
 
   public function user()

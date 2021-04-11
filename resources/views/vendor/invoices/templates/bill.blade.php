@@ -305,8 +305,11 @@
         </table>
 
         <h3>
-            {{ trans('invoices::invoice.amount_in_words') }}:<strong > {{ $invoice->getTotalAmountInWords() }}</strong>
+            {{ trans('invoices::invoice.amount_in_words') }}:
         </h3>
+        <h2>
+            <strong > {{ $invoice->getTotalAmountInWords() }}</strong>
+        </h2>
         <h3>
             <strong>{{ trans('invoices::invoice.pay_until') }}:</strong> <strong class="text-uppercase">{{ $invoice->getPayUntilDate() }}</strong>
         </h3>

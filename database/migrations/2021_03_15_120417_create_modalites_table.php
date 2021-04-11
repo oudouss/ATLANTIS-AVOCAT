@@ -17,8 +17,7 @@ class CreateModalitesTable extends Migration
             $table->id();
             $table->bigInteger('convention_id')->unsigned();
             $table->string('bill_type');
-            $table->longtext('name')->unique();
-            $table->string('stade_name');
+            $table->longtext('name');
             $table->boolean('type')->default(0);
             $table->decimal('amount', 20, 2)->nullable();
             $table->decimal('days', 8, 2)->nullable();

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConventionsTable extends Migration
+class CreateStadeNamesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateConventionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('conventions', function (Blueprint $table) {
+        Schema::create('stade_names', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('type')->default(0);
-            $table->decimal('amount', 20, 2)->nullable();
+            $table->decimal('days', 8, 2)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +29,6 @@ class CreateConventionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conventions');
+        Schema::dropIfExists('stade_names');
     }
 }
