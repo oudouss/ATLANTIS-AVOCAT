@@ -310,7 +310,6 @@ class Lawsuit extends Model
                     }
                 }    
             }
-            // $lawsuit->billings()->withTrashed()->restore();
             $lawsuit->stades()->withTrashed()->restore();
         });
     }
