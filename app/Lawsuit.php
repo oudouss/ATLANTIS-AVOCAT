@@ -279,6 +279,39 @@ class Lawsuit extends Model
             $lawsuit->billings()->delete();
             $lawsuit->stades()->delete();
         });
-
+        static::restoring(function ($lawsuit) {
+            if ($lawsuit->events()->count()==0) {
+                if ($lawsuit->model_id!=null) {
+                    if ($lawsuit->procedure==$lawsuit->model->procedure) {
+                        $roleAdmin = Role::where('name', 'Admin')->firstOrFail();
+                        $roleAvocat = Role::where('name', 'Avocat')->firstOrFail();
+                        $roleCabinet = Role::where('name', 'Cabinet')->firstOrFail();
+                        $adminUser = User::where('role_id', $roleAdmin->id)->firstOrFail();
+                        $RoleUsers = User::where('role_id', $roleAvocat->id)->orWhere('role_id', $roleCabinet->id)->get();
+                        $eventIds = collect([]);
+                        $LawsuitModelStades= ModelStade::where("model_id",$lawsuit->model_id)->get();
+                        foreach ($LawsuitModelStades as $lawsuitModelStade) {
+                            if ($lawsuitModelStade->current->days!=null) {
+                                $start_date= Carbon::parse($lawsuit->acceptation)->addWeekdays((float)$lawsuitModelStade->current->days)->toDateString() . ' ' . date('H:i:s');
+                                $event = Event::create([
+                                    'title' => 'Date Limite du Stade  ' . $lawsuitModelStade->current->name . ' - ' . $lawsuit->name,
+                                    'start_date' => $start_date,
+                                    'end_date' => Carbon::parse($start_date)->addMinutes(5)->toDateTimeString(),
+                                    'background_color' => '#22A7F0',
+                                    'user_id' => $adminUser->id,
+                                    'lawsuit_id' => $lawsuit->id,
+                                ]);
+                                $eventIds->push($event->id);
+                            }
+                        }
+                        foreach ($RoleUsers as $RoleUser) {
+                            $RoleUser->sharedevents()->syncWithoutDetaching($eventIds->all());
+                        }
+                    }
+                }    
+            }
+            $lawsuit->billings()->withTrashed()->restore();
+            $lawsuit->stades()->withTrashed()->restore();
+        });
     }
 }
