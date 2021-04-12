@@ -279,10 +279,6 @@ class Lawsuit extends Model
             $lawsuit->billings()->delete();
             $lawsuit->stades()->delete();
         });
-        static::restoring(function ($lawsuit) {
-            $lawsuit->events()->withTrashed()->restore();
-            $lawsuit->billings()->withTrashed()->restore();
-            $lawsuit->stades()->withTrashed()->restore();
-        });
+
     }
 }

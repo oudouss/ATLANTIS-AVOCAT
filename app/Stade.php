@@ -191,9 +191,7 @@ class Stade extends Model
         static::deleting(function ($stade) {
             $stade->attachements()->delete();
         });
-        static::restoring(function ($stade) {
-            $stade->attachements()->withTrashed()->restore();
-        });
+
     }
 
 }
