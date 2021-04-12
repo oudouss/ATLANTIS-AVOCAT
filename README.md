@@ -18,11 +18,6 @@ The demo has limited permissions. Install locally for full access.
 1. `php artisan serve` or use Laravel Valet or Laravel Homestead
 1. Visit `localhost:8000` in your browser
 1. Login or visit `/vvci/login` to access the Dashboard.
-1. Admin User/Password: `admin@app.com/password`.
-1. Avocat Web User/Password: `avocat@app.com/password`.
-1. Collaborateur 1 Web User/Password: `col1@app.com/password`.
-1. Collaborateur 2 Web User/Password: `col2@app.com/password`.
-1. Client 1 Web User/Password: `client1@app.com/password`.
 
 ## Characteristics
 
