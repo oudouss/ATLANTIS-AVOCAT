@@ -208,21 +208,23 @@ class Lawsuit extends Model
                                         $honoraireTotal = (float)$convention->amount;
                                     }
                                 } elseif ($convention->type==0) {
-                                    if ($honoraires->count()>0) {
-                                        foreach ($honoraires as $honoraire) {
-                                            $percent=$honoraire->percent;
-                                            if ($creance != null && $creance>=0) {
-                                                $honoraireTotalCalculated = ((float) $creance * (float) $percent) / 100;
-                                            }
-                                            $honoraireTotal = (float)$honoraireTotalCalculated;
-                                            if ($honoraire->min!=null && $honoraire->min>=0) {
-                                                if ($honoraireTotal<(float)$honoraire->min) {
-                                                    $honoraireTotal = (float) $honoraire->min;
+                                    if ($honoraires) {
+                                        if ($honoraires->count()>0) {
+                                            foreach ($honoraires as $honoraire) {
+                                                $percent=$honoraire->percent;
+                                                if ($creance != null && $creance>=0) {
+                                                    $honoraireTotalCalculated = ((float) $creance * (float) $percent) / 100;
                                                 }
-                                            }
-                                            if ($honoraire->min!=null && $honoraire->min>=0) {
-                                                if ($honoraireTotal>(float)$honoraire->max) {
-                                                    $honoraireTotal = (float) $honoraire->max;
+                                                $honoraireTotal = (float)$honoraireTotalCalculated;
+                                                if ($honoraire->min!=null && $honoraire->min>=0) {
+                                                    if ($honoraireTotal<(float)$honoraire->min) {
+                                                        $honoraireTotal = (float) $honoraire->min;
+                                                    }
+                                                }
+                                                if ($honoraire->min!=null && $honoraire->min>=0) {
+                                                    if ($honoraireTotal>(float)$honoraire->max) {
+                                                        $honoraireTotal = (float) $honoraire->max;
+                                                    }
                                                 }
                                             }
                                         }
@@ -273,14 +275,13 @@ class Lawsuit extends Model
         });
         static::deleting(function ($lawsuit) {
             $lawsuit->events()->delete();
-            // $lawsuit->billings()->delete();
-            $lawsuit->attachements()->delete();
+            $lawsuit->billings()->delete();
             $lawsuit->stades()->delete();
         });
         static::restoring(function ($lawsuit) {
             $lawsuit->events()->withTrashed()->restore();
+            $lawsuit->billings()->withTrashed()->restore();
             $lawsuit->stades()->withTrashed()->restore();
-            $lawsuit->attachements()->withTrashed()->restore();
         });
     }
 }

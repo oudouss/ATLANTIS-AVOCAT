@@ -122,21 +122,23 @@ class Stade extends Model
                                             $honoraireTotal = (float)$convention->amount;
                                         }
                                     } elseif ($convention->type==0) {
-                                        if ($honoraires != null && $honoraires->count()>0) {
-                                            foreach ($honoraires as $honoraire) {
-                                                $percent=$honoraire->percent;
-                                                if ($creance != null && $creance>=0) {
-                                                    $honoraireTotalCalculated = ((float) $creance * (float) $percent) / 100;
-                                                }
-                                                $honoraireTotal = (float)$honoraireTotalCalculated;
-                                                if ($honoraire->min!=null && $honoraire->min>=0) {
-                                                    if ($honoraireTotal<(float)$honoraire->min) {
-                                                        $honoraireTotal = (float) $honoraire->min;
+                                        if ($honoraires) {
+                                            if ($honoraires->count()>0) {
+                                                foreach ($honoraires as $honoraire) {
+                                                    $percent=$honoraire->percent;
+                                                    if ($creance != null && $creance>=0) {
+                                                        $honoraireTotalCalculated = ((float) $creance * (float) $percent) / 100;
                                                     }
-                                                }
-                                                if ($honoraire->min!=null && $honoraire->min>=0) {
-                                                    if ($honoraireTotal>(float)$honoraire->max) {
-                                                        $honoraireTotal = (float) $honoraire->max;
+                                                    $honoraireTotal = (float)$honoraireTotalCalculated;
+                                                    if ($honoraire->min!=null && $honoraire->min>=0) {
+                                                        if ($honoraireTotal<(float)$honoraire->min) {
+                                                            $honoraireTotal = (float) $honoraire->min;
+                                                        }
+                                                    }
+                                                    if ($honoraire->min!=null && $honoraire->min>=0) {
+                                                        if ($honoraireTotal>(float)$honoraire->max) {
+                                                            $honoraireTotal = (float) $honoraire->max;
+                                                        }
                                                     }
                                                 }
                                             }
