@@ -313,9 +313,7 @@ class Billing extends Model
                 }
             }
         });
-        static::restoring(function ($billing) {
-            $billing->withTrashed()->restore();
-        });
+
 
     }
 }
