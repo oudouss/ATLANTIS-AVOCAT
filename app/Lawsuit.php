@@ -197,6 +197,7 @@ class Lawsuit extends Model
                             $convention = $lawsuit->convention;
                             $creance = $lawsuit->creance;
                             $honoraireTotal = null;
+                            $billingAmount = null;
                             if ($creance != null && $creance>=0) {
                                 $honoraires = $convention->honoraires()->where('min_crc', $convention->honoraires()->where('min_crc', '<=', $creance)->max('min_crc'))->get();
                             }
@@ -241,22 +242,26 @@ class Lawsuit extends Model
                                     $billingMission= $modalite->name;
                                     $billingDays= $modalite->days;
                                     $billingTax= $modalite->tax;
-                                    if (!in_array($billingMission, $lawsuitBillsItems1) && !in_array($billingMission, $lawsuitBillsItems2) && !in_array($billingMission, $lawsuitBillsItems3) && !in_array($billingMission, $lawsuitBillsItems4)) {
-                                        if ($billingTax!=null) {
-                                            $billingTax=(float)$billingTax;
+                                    if ($billingMission!=null) {
+                                        if (!in_array($billingMission, $lawsuitBillsItems1) && !in_array($billingMission, $lawsuitBillsItems2) && !in_array($billingMission, $lawsuitBillsItems3) && !in_array($billingMission, $lawsuitBillsItems4)) {
+                                            if ($billingTax!=null) {
+                                                $billingTax=(float)$billingTax;
+                                            }
+                                            if ($billingDays!=null) {
+                                                $billingDays=(float)$billingDays;
+                                            }
+                                            if ($billingAmount!=null) {
+                                                Billing::create([
+                                                    'lawsuit_id'    => $lawsuit->id,
+                                                    'type'          => $billingType,
+                                                    'item1'         => $billingMission,
+                                                    'days'          => $billingDays,
+                                                    'tax'           => $billingTax,
+                                                    'date'          => now(),
+                                                    'price1'        => $billingAmount,
+                                                ]);
+                                            }
                                         }
-                                        if ($billingDays!=null) {
-                                            $billingDays=(float)$billingDays;
-                                        }
-                                        Billing::create([
-                                            'lawsuit_id'    => $lawsuit->id,
-                                            'type'          => $billingType,
-                                            'item1'         => $billingMission,
-                                            'days'          => $billingDays,
-                                            'tax'           => $billingTax,
-                                            'date'          => now(),
-                                            'price1'        => $billingAmount,
-                                        ]);
                                     }
                                 }
                             }

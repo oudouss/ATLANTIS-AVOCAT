@@ -111,6 +111,7 @@ class Stade extends Model
                                 $convention = $stade->lawsuit->convention;
                                 $creance = $stade->lawsuit->creance;
                                 $honoraireTotal=null;
+                                $billingAmount = null;
                                 if ($creance != null && $creance>=0) {
                                     $honoraires = $convention->honoraires()->where('min_crc', $convention->honoraires()->where('min_crc', '<=', $creance)->max('min_crc'))->get();
                                 }
@@ -146,7 +147,6 @@ class Stade extends Model
                                         $lawsuitBillsItems2=Billing::where('lawsuit_id', $stade->lawsuit_id)->pluck('item2')->toArray();
                                         $lawsuitBillsItems3=Billing::where('lawsuit_id', $stade->lawsuit_id)->pluck('item3')->toArray();
                                         $lawsuitBillsItems4=Billing::where('lawsuit_id', $stade->lawsuit_id)->pluck('item4')->toArray();
-                                        $billingDate= now();
                                         if ($modalite->type==0 && $honoraireTotal!=null) {
                                             $billingAmount = (float) (($honoraireTotal * (float) $modalite->amount) / 100);
                                         } elseif ($modalite->type==1) {
@@ -156,22 +156,26 @@ class Stade extends Model
                                         $billingMission= $modalite->name;
                                         $billingDays= $modalite->days;
                                         $billingTax= $modalite->tax;
-                                        if (!in_array($billingMission, $lawsuitBillsItems1) && !in_array($billingMission, $lawsuitBillsItems2) && !in_array($billingMission, $lawsuitBillsItems3) && !in_array($billingMission, $lawsuitBillsItems4)) {
-                                            if ($billingTax!=null) {
-                                                $billingTax=(float)$billingTax;
+                                        if ($billingMission!=null) {
+                                            if (!in_array($billingMission, $lawsuitBillsItems1) && !in_array($billingMission, $lawsuitBillsItems2) && !in_array($billingMission, $lawsuitBillsItems3) && !in_array($billingMission, $lawsuitBillsItems4)) {
+                                                if ($billingTax!=null) {
+                                                    $billingTax=(float)$billingTax;
+                                                }
+                                                if ($billingDays!=null) {
+                                                    $billingDays=(float)$billingDays;
+                                                }
+                                                if ($billingAmount!=null) {
+                                                    Billing::create([
+                                                        'lawsuit_id'    => $stade->lawsuit_id,
+                                                        'type'          => $billingType,
+                                                        'item1'         => $billingMission,
+                                                        'days'          => $billingDays,
+                                                        'tax'           => $billingTax,
+                                                        'date'          => now(),
+                                                        'price1'        => $billingAmount,
+                                                    ]);
+                                                }
                                             }
-                                            if ($billingDays!=null) {
-                                                $billingDays=(float)$billingDays;
-                                            }
-                                            Billing::create([
-                                            'lawsuit_id'    => $stade->lawsuit_id,
-                                            'type'          => $billingType,
-                                            'item1'         => $billingMission,
-                                            'days'          => $billingDays,
-                                            'tax'           => $billingTax,
-                                            'date'          => $billingDate,
-                                            'price1'        => $billingAmount,
-                                            ]);
                                         }
                                     }
                                 }
