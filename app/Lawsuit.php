@@ -198,6 +198,7 @@ class Lawsuit extends Model
                             $creance = $lawsuit->creance;
                             $honoraireTotal = null;
                             $billingAmount = null;
+                            $honoraires = null;
                             if ($creance != null && $creance>=0) {
                                 $honoraires = $convention->honoraires()->where('min_crc', $convention->honoraires()->where('min_crc', '<=', $creance)->max('min_crc'))->get();
                             }
@@ -208,7 +209,7 @@ class Lawsuit extends Model
                                         $honoraireTotal = (float)$convention->amount;
                                     }
                                 } elseif ($convention->type==0) {
-                                    if ($honoraires) {
+                                    if ($honoraires!=null) {
                                         if ($honoraires->count()>0) {
                                             foreach ($honoraires as $honoraire) {
                                                 $percent=$honoraire->percent;
