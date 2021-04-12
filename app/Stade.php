@@ -110,6 +110,7 @@ class Stade extends Model
                             if ($stade->state == 1) {
                                 $convention = $stade->lawsuit->convention;
                                 $creance = $stade->lawsuit->creance;
+                                $honoraireTotal=null;
                                 if ($creance != null && $creance>=0) {
                                     $honoraires = $convention->honoraires()->where('min_crc', $convention->honoraires()->where('min_crc', '<=', $creance)->max('min_crc'))->get();
                                 }

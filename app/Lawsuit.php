@@ -196,6 +196,7 @@ class Lawsuit extends Model
                         if ($stade->state == 1) {
                             $convention = $lawsuit->convention;
                             $creance = $lawsuit->creance;
+                            $honoraireTotal = null;
                             if ($creance != null && $creance>=0) {
                                 $honoraires = $convention->honoraires()->where('min_crc', $convention->honoraires()->where('min_crc', '<=', $creance)->max('min_crc'))->get();
                             }
