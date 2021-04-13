@@ -636,6 +636,11 @@
     });
 
 </script>
+@if(Session::has('message'))
+    <script>
+        toastr.{!!Session::get('alert-type')!!}("{!! Session::get('message') !!}");
+    </script>
+@endif
 @if(Session::has('message_added'))
     <script>
         toastr.{!!Session::get('alert-type')!!}("{!! Session::get('message_added') !!}");
