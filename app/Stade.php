@@ -5,6 +5,7 @@ namespace App;
 use App\Billing;
 use App\Lawsuit;
 use Carbon\Carbon;
+use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -98,6 +99,13 @@ class Stade extends Model
                                             'date' => now(),
                                             'state' => 0,
                                         ]);
+                                        $dataType = Voyager::model('DataType')->where('slug', '=', 'stades')->first();
+
+                                        app('request')->session()->put([
+                                            'message_added' => " {$dataType->getTranslatedAttribute('display_name_singular')}" . " ".__('voyager::generic.successfully_added_new') ,
+                                            'alert-type' => 'success',
+                                        ]);
+
                                     }
                                 }
                             }
@@ -112,6 +120,7 @@ class Stade extends Model
                                 $creance = $stade->lawsuit->creance;
                                 $honoraireTotal=null;
                                 $billingAmount = null;
+                                $billingscreated=0;
                                 $honoraires = null;
                                 if ($creance != null && $creance>=0) {
                                     $honoraires = $convention->honoraires()->where('min_crc', $convention->honoraires()->where('min_crc', '<=', $creance)->max('min_crc'))->get();
@@ -177,9 +186,18 @@ class Stade extends Model
                                                         'date'          => now(),
                                                         'price1'        => $billingAmount,
                                                     ]);
+                                                    $billingscreated++;
                                                 }
                                             }
                                         }
+                                    }
+                                    if ($billingscreated>0) {
+                                        $dataType = Voyager::model('DataType')->where('slug', '=', 'factures')->first();
+
+                                        app('request')->session()->put([
+                                            'message_billing_added' => $billingscreated." {$dataType->getTranslatedAttribute('display_name_singular')}" . " ".__('voyager::generic.successfully_added_new') ,
+                                            'alert-type' => 'success',
+                                        ]);
                                     }
                                 }
                             }

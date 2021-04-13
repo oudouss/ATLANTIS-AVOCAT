@@ -35,8 +35,6 @@
 @section('content')
 <div class="page-content read container-fluid">
     <div class="row">
-        {{-- @if ($dataTypeContent->procedure=='option1'|| $dataTypeContent->procedure=='option2' ||$dataTypeContent->procedure=='option4') --}}
-
         @if ($dataTypeContent->stades->count()>0)
             <div class="col-md-8">
                 <div class="panel panel-bordered" style="padding-bottom:5px;">
@@ -344,7 +342,6 @@
             </div>
 
         @endif
-
     </div>
 
 
@@ -639,4 +636,14 @@
     });
 
 </script>
+@if(Session::has('message_added'))
+    <script>
+        toastr.{!!Session::get('alert-type')!!}("{!! Session::get('message_added') !!}");
+    </script>
+@endif
+@if(Session::has('message_billing_added'))
+    <script>
+        toastr.{!!Session::get('alert-type')!!}("{!! Session::get('message_billing_added') !!}");
+    </script>
+@endif
 @stop
