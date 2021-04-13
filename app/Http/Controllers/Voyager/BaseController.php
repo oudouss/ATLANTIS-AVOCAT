@@ -443,9 +443,6 @@ class BaseController extends VoyagerBaseController
             $redirect = redirect()->back();
         }
 
-
-// dd(redirect()->back()==redirect()->route("voyager.affaires.show", $affaireId));
-
         return $redirect->with([
             'message' => __('voyager::generic.successfully_updated') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
             'alert-type' => 'success',
