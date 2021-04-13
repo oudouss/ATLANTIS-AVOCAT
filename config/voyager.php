@@ -161,6 +161,7 @@ return [
             'App\\Widgets\\ContactDimmer',
             'App\\Widgets\\LawsuitDimmer',
             'App\\Widgets\\StadeDimmer',
+            'App\\Widgets\\BillingDimmer',
         ],
 
     ],
