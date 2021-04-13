@@ -650,5 +650,11 @@
     <script>
         toastr.{!!Session::get('alert-type')!!}("{!! Session::get('message_billing_added') !!}");
     </script>
+
+@endif
+@if(Session::has('message_updated'))
+    <script>
+        toastr.{!!Session::get('alert-type')!!}("{!! Session::get('message_updated') !!}");
+    </script>
 @endif
 @stop
