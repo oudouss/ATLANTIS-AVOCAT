@@ -94,7 +94,10 @@ class Stade extends Model
                             app('request')->session()->forget('message_added');
                             app('request')->session()->forget('message_updated');
                             if ($stade->stade_name_id==$lawsuitModelStadesLast->current_id) {
-                                $stade->lawsuit->update(['state'=> "option3"]);
+                                $stade->lawsuit->update([
+                                    'state'=> "option3",
+                                    'classement'=> now(),
+                                ]);
                                 if ($stade->lawsuit->wasChanged('state')) {
                                     $dataType = Voyager::model('DataType')->where('slug', '=', 'affaires')->first();
                                     session()->put([
