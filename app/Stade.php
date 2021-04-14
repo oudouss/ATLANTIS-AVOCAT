@@ -78,6 +78,9 @@ class Stade extends Model
         parent::boot();
 
         static::saved(function ($stade){
+            app('request')->session()->forget('message_added');
+            app('request')->session()->forget('message_updated');
+            app('request')->session()->forget('message_billing_added');
             if ($stade->lawsuit->state== "option1") {
                 if ($stade->lawsuit->model_id!=null) {
                     if ($stade->lawsuit->procedure==$stade->lawsuit->model->procedure) {
