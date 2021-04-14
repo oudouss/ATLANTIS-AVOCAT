@@ -128,12 +128,12 @@ class Billing extends Model
                 }
                 $custom_fields = [
                     'Partie Adverse' => $adverseName,
-                    'Référence ou Radicale' => $caseNum,
+                    'Référence ou Radical' => $caseNum,
                 ];
                 if($creance != null){
                     $custom_fields = [
                         'Partie Adverse' => $adverseName,
-                        'Référence ou Radicale' => $caseNum,
+                        'Référence ou Radical' => $caseNum,
                         'Montant de la créance' => $creance,
                     ];
                 }

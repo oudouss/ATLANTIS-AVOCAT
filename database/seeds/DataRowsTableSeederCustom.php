@@ -567,7 +567,7 @@ class DataRowsTableSeederCustom extends Seeder
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'text',
-                'display_name' => 'Référence ou Radicale',
+                'display_name' => 'Référence ou Radical',
                 'required'     => 1,
                 'browse'       => 1,
                 'read'         => 1,
