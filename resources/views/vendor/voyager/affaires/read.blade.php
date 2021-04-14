@@ -137,7 +137,16 @@
             <div class="col-md-4">
                 <div class="panel panel panel-bordered panel-default">
                     <div class="panel-heading" style="border-bottom:0;">
-                        <h3 class="panel-title"><i class="voyager-milestone"></i>&nbsp;Stades</h3>
+                        <h3 class="panel-title"><i class="voyager-milestone"></i>&nbsp;Stades
+                        <span class="txt-center pull-right">
+                        @can('add', $dataTypeContent)
+                            <a href="{{ route('voyager.stades.create') }}" class="btn btn-success btn-xs btn-add-new">
+                                <i class="voyager-plus"></i>
+                            </a>
+                        @endcan
+                        </span>                        
+                        </h3>
+
                     </div>
                     <div class="panel-body">
                         @foreach ( $dataTypeContent->stades as $stade)
