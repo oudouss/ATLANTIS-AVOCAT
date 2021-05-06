@@ -18,7 +18,8 @@ class CreateHonorairesTable extends Migration
             $table->bigInteger('convention_id')->unsigned();
             $table->decimal('min_crc', 20, 2);
             $table->decimal('max_crc', 20, 2)->nullable();
-            $table->decimal('percent', 8, 2);
+            $table->boolean('type')->default(0);
+            $table->decimal('amount', 20, 2)->nullable();
             $table->decimal('min', 20, 2)->nullable();
             $table->decimal('max', 20, 2)->nullable();
             $table->foreign('convention_id')->references('id')->on('conventions')->cascadeOnDelete()->cascadeOnUpdate();

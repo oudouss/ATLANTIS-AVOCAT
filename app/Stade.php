@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use TCG\Voyager\Facades\Voyager;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Stade extends Model
@@ -77,11 +76,11 @@ class Stade extends Model
     {
         parent::boot();
 
-        static::saved(function ($stade){
+        static::updated(function ($stade){
             app('request')->session()->forget('message_added');
             app('request')->session()->forget('message_updated');
             app('request')->session()->forget('message_billing_added');
-            if ($stade->lawsuit->state== "option1") {
+            if ($stade->lawsuit->state == "option1") {
                 if ($stade->lawsuit->model_id!=null) {
                     if ($stade->lawsuit->procedure==$stade->lawsuit->model->procedure) {
                         $lawsuitModelStades= ModelStade::where("model_id", $stade->lawsuit->model_id)->where("current_id", $stade->stade_name_id)->get();
@@ -147,23 +146,24 @@ class Stade extends Model
                                             $honoraireTotal = (float)$convention->amount;
                                         }
                                     } elseif ($convention->type==0) {
-                                        if ($honoraires!=null) {
-                                            if ($honoraires->count()>0) {
-                                                foreach ($honoraires as $honoraire) {
-                                                    $percent=$honoraire->percent;
+                                        if ($honoraires!=null && $honoraires->count()>0) {
+                                            foreach ($honoraires as $honoraire) {
+                                                if ($honoraire->type==0) {
                                                     if ($creance != null && $creance>=0) {
-                                                        $honoraireTotalCalculated = ((float) $creance * (float) $percent) / 100;
+                                                        $honoraireTotalCalculated = ((float) $creance * (float) $honoraire->amount) / 100;
                                                     }
-                                                    $honoraireTotal = (float)$honoraireTotalCalculated;
-                                                    if ($honoraire->min!=null && $honoraire->min>=0) {
-                                                        if ($honoraireTotal<(float)$honoraire->min) {
-                                                            $honoraireTotal = (float) $honoraire->min;
-                                                        }
+                                                }elseif ($honoraire->type==1) {
+                                                    $honoraireTotalCalculated = (float) $honoraire->amount;
+                                                }
+                                                $honoraireTotal = (float)$honoraireTotalCalculated;
+                                                if ($honoraire->min!=null && $honoraire->min>=0) {
+                                                    if ($honoraireTotal<(float)$honoraire->min) {
+                                                        $honoraireTotal = (float) $honoraire->min;
                                                     }
-                                                    if ($honoraire->min!=null && $honoraire->min>=0) {
-                                                        if ($honoraireTotal>(float)$honoraire->max) {
-                                                            $honoraireTotal = (float) $honoraire->max;
-                                                        }
+                                                }
+                                                if ($honoraire->max!=null && $honoraire->max>=0) {
+                                                    if ($honoraireTotal>(float)$honoraire->max) {
+                                                        $honoraireTotal = (float) $honoraire->max;
                                                     }
                                                 }
                                             }

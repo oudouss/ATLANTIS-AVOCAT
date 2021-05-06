@@ -308,7 +308,6 @@ class Billing extends Model
                 foreach (json_decode($billing->pdf) as $file) {
                     if (Storage::disk(config('voyager.storage.disk'))->exists($file->download_link)) {
                         Storage::disk(config('voyager.storage.disk'))->delete($file->download_link);
-                        $billing->pdf = null;
                     }
                 }
             }

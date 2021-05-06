@@ -2739,7 +2739,7 @@ class DataRowsTableSeederCustom extends Seeder
                     "step"=> 0.01,
                     "min"=> 0,
                     "display" => [
-                        'width' => 3,
+                        'width' => 2,
                     ],
                     "validation" => [
                         "rule" => "required",
@@ -2767,24 +2767,47 @@ class DataRowsTableSeederCustom extends Seeder
                     "step"=> 0.01,
                     "min"=> 0,
                     "display" => [
-                        'width' => 3,
+                        'width' => 2,
                     ],
                 ],
                 'order'        => 5,
             ])->save();
         }
-        $dataRow = $this->dataRow($honorairesDataType, 'percent');
+        $dataRow = $this->dataRow($honorairesDataType, 'type');
+        if (!$dataRow->exists) {
+            $dataRow->fill([
+                'type'         => 'checkbox',
+                'display_name' => 'Montant Fixe ou Pourcentage',
+                'required'     => 1,
+                'browse'       => 1,
+                'read'         => 1,
+                'edit'         => 1,
+                'add'          => 1,
+                'delete'       => 1,
+                'details'      => [
+                    "description" => "Honoraire de l'affaire: Montant Fixe ou Pourcentage à calculer",
+                    "on" => "Montant Fixe",
+                    "off" => "Pourcentage",
+                    "display" => [
+                        'width' => 2,
+                    ],
+                ],
+                'order'        => 6,
+            ])->save();
+        }
+        $dataRow = $this->dataRow($honorairesDataType, 'amount');
         if (!$dataRow->exists) {
             $dataRow->fill([
                 'type'         => 'number',
-                'display_name' => 'Pourcentage',
-                'required'     => 0,
+                'display_name' => 'Valeur',
+                'required'     => 1,
                 'browse'       => 1,
                 'read'         => 1,
                 'edit'         => 1,
                 'add'          => 1,
                 'delete'       => 1,
                 'details' => [
+                    "description" => "Valeur de l'honoraire: Montant Fixe ou Pourcentage",
                     "step"=> 0.01,
                     "min"=> 0,
                     "display" => [
@@ -2797,7 +2820,7 @@ class DataRowsTableSeederCustom extends Seeder
                         ],
                     ],
                 ],
-                'order'        => 6,
+                'order'        => 7,
             ])->save();
         }
         $dataRow = $this->dataRow($honorairesDataType, 'min');
@@ -2819,7 +2842,7 @@ class DataRowsTableSeederCustom extends Seeder
                         'width' => 2,
                     ],
                 ],
-                'order'        => 7,
+                'order'        => 8,
             ])->save();
         }
         $dataRow = $this->dataRow($honorairesDataType, 'max');
@@ -2841,7 +2864,7 @@ class DataRowsTableSeederCustom extends Seeder
                         'width' => 2,
                     ],
                 ],
-                'order'        => 8,
+                'order'        => 9,
             ])->save();
         }
         $dataRow = $this->dataRow($honorairesDataType, 'created_at');
@@ -2856,7 +2879,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 11,
+                'order'        => 21,
             ])->save();
         }
         $dataRow = $this->dataRow($honorairesDataType, 'updated_at');
@@ -2871,7 +2894,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 12,
+                'order'        => 22,
             ])->save();
         }
         $dataRow = $this->dataRow($honorairesDataType, 'deleted_at');
@@ -2886,7 +2909,7 @@ class DataRowsTableSeederCustom extends Seeder
                 'add'          => 0,
                 'delete'       => 0,
                 'details'      => '',
-                'order'        => 13,
+                'order'        => 23,
             ])->save();
         }
         $dataRow = $this->dataRow($honorairesDataType, 'honoraire_belongsto_convention_relationship');
