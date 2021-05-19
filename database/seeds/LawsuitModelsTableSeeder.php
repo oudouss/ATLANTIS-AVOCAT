@@ -13,9 +13,9 @@ class LawsuitModelsTableSeeder extends Seeder
     public function run()
     {
         $models=[
-            ["id" =>1, "procedure_id" =>1 ,"name"  => "Modèle Par Défaut: Assignation"],
-            ["id" =>2, "procedure_id" =>2 ,"name"  => "Modèle Par Défaut: Nantissement (F.C)"],
-            ["id" =>3, "procedure_id" =>3 ,"name"  => "Modèle Par Défaut: Commandement Immobilier"],
+            ["id" =>1, "procedure_id" =>1 ,"name"  => "Assignation"],
+            ["id" =>2, "procedure_id" =>2 ,"name"  => "Nantissement (F.C)"],
+            ["id" =>3, "procedure_id" =>3 ,"name"  => "Commandement Immobilier"],
         ];
         foreach ($models as $model) {
             LawsuitModel::updateOrCreate(['id'=> $model['id']], $model);

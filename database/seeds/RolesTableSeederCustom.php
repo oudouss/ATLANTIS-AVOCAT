@@ -16,7 +16,7 @@ class RolesTableSeederCustom extends Seeder
         if ($role->exists) {
             $role->fill([
                 'name' => 'Admin',
-                'display_name' => 'Administrateur',
+                'display_name' => 'Cabinet: Administrateur',
             ])->save();
         }
 
@@ -68,7 +68,7 @@ class RolesTableSeederCustom extends Seeder
         if (!$role->exists) {
             $role->fill([
                 'name' => 'Comptable',
-                'display_name' => 'Comptable',
+                'display_name' => 'Cabinet: Comptable',
                 'created_at' => now(),
                 'updated_at' => now(),
             ])->save();

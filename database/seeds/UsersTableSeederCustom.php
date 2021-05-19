@@ -18,7 +18,7 @@ class UsersTableSeederCustom extends Seeder
 
             User::create([
                 'name'           => 'Administrateur',
-                'email'          => 'admin@app.com',
+                'email'          => 'admin@cabinetzaoui.ma',
                 'password'       => bcrypt(config('voyager.adminPassword')),
                 'avatar'         => 'users/September2020/MDnzvodhllJcfJ2VZleH.png',
                 'locale'         => 'fr',
@@ -29,7 +29,7 @@ class UsersTableSeederCustom extends Seeder
 
             User::create([
                 'name'           => 'Maître Avocat',
-                'email'          => 'avocat@app.com',
+                'email'          => 'avocat@cabinetzaoui.ma',
                 'avatar'         => 'users/September2020/11KFtdBU0w2iokAUr7xr.png',
                 'password'       => bcrypt('password2021**'),
                 'locale'         => 'fr',
@@ -40,7 +40,7 @@ class UsersTableSeederCustom extends Seeder
 
             User::create([
                 'name'           => 'Collaborateur 1',
-                'email'          => 'col1@app.com',
+                'email'          => 'col1@cabinetzaoui.ma',
                 'avatar'         => 'users/September2020/11KFtdBU0w2iokAUr7xr.png',
                 'password'       => bcrypt('password2021**'),
                 'locale'       => 'fr',
@@ -49,7 +49,7 @@ class UsersTableSeederCustom extends Seeder
 
             User::create([
                 'name'           => 'Collaborateur 2',
-                'email'          => 'col2@app.com',
+                'email'          => 'col2@cabinetzaoui.ma',
                 'avatar'         => 'users/defaultAvatar.png',
                 'password'       => bcrypt('password2021**'),
                 'locale'       => 'fr',
@@ -60,20 +60,30 @@ class UsersTableSeederCustom extends Seeder
 
             User::create([
                 'name'           => 'Client Test',
-                'email'          => 'client-test@app.com',
+                'email'          => 'client-test@cabinetzaoui.ma',
                 'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
                 'password'       => bcrypt('password2021**'),
                 'locale'       => 'fr',
                 'role_id'        => $role->id,
             ]);
-//TODO:ADD ROLES FOR 
+            $role = Role::where('name', 'Comptable')->firstOrFail();
+
+            User::create([
+                'name'           => 'Comptable',
+                'email'          => 'Comptable@cabinetzaoui.ma',
+                'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
+                'password'       => bcrypt('password2021**'),
+                'locale'       => 'fr',
+                'role_id'        => $role->id,
+            ]);
+            //TODO:ADD useCases & permissions
             // $role = Role::where('name', 'Huissier')->firstOrFail();
 
             // User::create([
             //     'name'           => 'Huissier 1',
-            //     'email'          => 'huissier1@app.com',
+            //     'email'          => 'huissier1@cabinetzaoui.ma',
             //     'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
-            //     'password'       => bcrypt('password'),
+            //     'password'       => bcrypt('password2021**'),
             //     'locale'       => 'fr',
             //     'role_id'        => $role->id,
             // ]);
@@ -81,14 +91,14 @@ class UsersTableSeederCustom extends Seeder
             // $role = Role::where('name', 'Expert')->firstOrFail();
 
             // User::create([
-            //     'name'           => 'Expert 1',
-            //     'email'          => 'expert1@app.com',
+            //     'name'           => 'Expert',
+            //     'email'          => 'expert@cabinetzaoui.ma',
             //     'avatar'         => 'users/September2020/XhlcbhGlETcrwpTXkShF.png',
-            //     'password'       => bcrypt('password'),
+            //     'password'       => bcrypt('password2021**'),
             //     'locale'       => 'fr',
             //     'role_id'        => $role->id,
             // ]);
-//TODO:ADD ROLES FOR ACCOUNTANT
+
         }
 
 

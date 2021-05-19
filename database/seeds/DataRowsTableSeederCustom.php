@@ -51,10 +51,8 @@ class DataRowsTableSeederCustom extends Seeder
                 'details'      => [
                     "default" => "option1",
                     "options" =>[
-                        "option1" => "Adversaire",
+                        "option1" => "Partie Adverse",
                         "option2" => "Client",
-                        "option3" => "Juge",
-                        "option4" => "Mandataire Judiciaire",
                     ],
                     "display" => [
                         'width' => 4,
@@ -102,10 +100,10 @@ class DataRowsTableSeederCustom extends Seeder
                 'details'      => [
                     "default"=>"option1",
                     "options"=>[
-                        "option1"=>"Madame",
-                        "option2"=>"Mademoiselle",
-                        "option3"=>"Monsieur",
-                        "option4"=>"Personne Morale",
+                        "option1"=>"Mme.",
+                        "option2"=>"Mlle.",
+                        "option3"=>"M.",
+                        "option4"=>"Ste.",
                         ],
                     "display" => [
                         'width' => 4,
@@ -535,7 +533,6 @@ class DataRowsTableSeederCustom extends Seeder
                         "option4"  => "Fiscal",
                         "option5"  => "Pénal",
                         "option6"  => "Social",
-                        "option7"  => "Fiscal",
                     ],
                     "display" => [
                         'width' => 3,
