@@ -163,24 +163,12 @@ class Billing extends Model
                     if ($qty1 != null && $unit1 != null) {
                         $invoice_items1 = (new InvoiceItem())->title($item1)->pricePerUnit($price1)->quantity($qty1)->units($unit1);
                     }
-                    if ($qty1 != null) {
-                        $invoice_items1 =(new InvoiceItem())->title($item1)->pricePerUnit($price1)->quantity($qty1);
-                    }
-                    if ($unit1 != null) {
-                        $invoice_items1 =(new InvoiceItem())->title($item1)->pricePerUnit($price1)->units($unit1);
-                    }
                     array_push($items, $invoice_items1);
                 }
                 if ($item2 != null && $price2 != null) {
                     $invoice_items2 = (new InvoiceItem())->title($item2)->pricePerUnit($price2);
                     if ($qty2 != null && $unit2 != null) {
                         $invoice_items2 = (new InvoiceItem())->title($item2)->pricePerUnit($price2)->quantity($qty2)->units($unit2);
-                    }
-                    if ($qty2 != null) {
-                        $invoice_items2 = (new InvoiceItem())->title($item2)->pricePerUnit($price2)->quantity($qty2);
-                    }
-                    if ($unit2 != null) {
-                        $invoice_items2 = (new InvoiceItem())->title($item2)->pricePerUnit($price2)->units($unit2);
                     }
                     array_push($items, $invoice_items2);
                 }
@@ -189,24 +177,12 @@ class Billing extends Model
                     if ($qty3 != null && $unit3 != null) {
                         $invoice_items3 = (new InvoiceItem())->title($item3)->pricePerUnit($price3)->quantity($qty3)->units($unit3);
                     }
-                    if ($qty3 != null) {
-                        $invoice_items3 = (new InvoiceItem())->title($item3)->pricePerUnit($price3)->quantity($qty3);
-                    }
-                    if ($unit3 != null) {
-                        $invoice_items3 = (new InvoiceItem())->title($item3)->pricePerUnit($price3)->units($unit3);
-                    }
                     array_push($items, $invoice_items3);
                 }
                 if ($item4 != null && $price4 != null) {
                     $invoice_items4 = (new InvoiceItem())->title($item4)->pricePerUnit($price4);
                     if ($qty4 != null && $unit4 != null) {
                         $invoice_items4 = (new InvoiceItem())->title($item4)->pricePerUnit($price4)->quantity($qty4)->units($unit4);
-                    }
-                    if ($qty4 != null) {
-                        $invoice_items4 = (new InvoiceItem())->title($item4)->pricePerUnit($price4)->quantity($qty4);
-                    }
-                    if ($unit4 != null) {
-                        $invoice_items4 = (new InvoiceItem())->title($item4)->pricePerUnit($price4)->units($unit4);
                     }
                     array_push($items, $invoice_items4);
                 }
