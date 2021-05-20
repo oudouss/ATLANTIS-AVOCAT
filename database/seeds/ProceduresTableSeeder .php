@@ -16,6 +16,7 @@ class ProceduresTableSeeder extends Seeder
             ["id" =>1 ,"name"  => "Assignation"],
             ["id" =>2 ,"name"  => "Nantissement (F.C)"],
             ["id" =>3 ,"name"  => "Commandement Immobilier"],
+            ["id" =>4 ,"name"  => "Redressement Judiciaire"],
         ];
         foreach ($procedures as $procedure) {
             Procedure::updateOrCreate(['id'=> $procedure['id']], $procedure);
