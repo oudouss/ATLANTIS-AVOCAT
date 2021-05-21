@@ -12,14 +12,19 @@ class ProceduresTableSeeder extends Seeder
      */
     public function run()
     {
-        $procedures=[
-            ["id" =>1 ,"name"  => "Assignation"],
-            ["id" =>2 ,"name"  => "Nantissement (F.C)"],
-            ["id" =>3 ,"name"  => "Commandement Immobilier"],
-            ["id" =>4 ,"name"  => "Redressement Judiciaire"],
+        $names=[
+            "Assignation",
+            "Nantissement (F.C)",
+            "Commandement Immobilier",
+            "Redressement Judiciaire",
         ];
-        foreach ($procedures as $procedure) {
-            Procedure::updateOrCreate(['id'=> $procedure['id']], $procedure);
+        foreach ($names as $name) {
+            $procedure=Procedure::updateOrCreate(
+            ['name'=> $name],
+            [
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]);
         }
     }
 }

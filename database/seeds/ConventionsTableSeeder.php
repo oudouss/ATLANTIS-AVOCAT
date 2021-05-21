@@ -14,11 +14,19 @@ class ConventionsTableSeeder extends Seeder
     public function run()
     {
         $conventions=[
-            ["id" =>1 ,"name"  => "Convention CIH-2021: Commandement Immobilier(Hors Fogarim)", "type"=>0, "amount"=>null, "procedure_id" =>3],
-            ["id" =>2 ,"name"  => "Convention CIH-2021: Assignation en paiement(Hors Fogarim)", "type"=>0, "amount"=>null, "procedure_id" =>1],
+            ["name"  => "Convention CIH-2021: Commandement Immobilier(Hors Fogarim)", "type"=>0, "amount"=>null, "procedure_id" =>3],
+            ["name"  => "Convention CIH-2021: Assignation en paiement(Hors Fogarim)", "type"=>0, "amount"=>null, "procedure_id" =>1],
         ];
         foreach ($conventions as $convention) {
-            Convention::updateOrCreate(['id'=> $convention['id']], $convention);
+            Convention::updateOrCreate(
+            ['name'=> $convention['name']],
+            [
+                'type'=> $convention['type'],
+                'amount'=> $convention['amount'],
+                'procedure_id'=> $convention['procedure_id'],
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]);
         }
     }
 }

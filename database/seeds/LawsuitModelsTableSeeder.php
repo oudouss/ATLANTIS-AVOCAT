@@ -1,5 +1,6 @@
 <?php
 
+use App\Procedure;
 use App\LawsuitModel;
 use Illuminate\Database\Seeder;
 
@@ -12,14 +13,22 @@ class LawsuitModelsTableSeeder extends Seeder
      */
     public function run()
     {
-        $models=[
-            ["id" =>1, "procedure_id" =>1 ,"name"  => "Assignation"],
-            ["id" =>2, "procedure_id" =>2 ,"name"  => "Nantissement (F.C)"],
-            ["id" =>3, "procedure_id" =>3 ,"name"  => "Commandement Immobilier"],
-            ["id" =>4, "procedure_id" =>4 ,"name"  => "Redressement Judiciare"],
+
+        $names=[
+            "Assignation",
+            "Nantissement (F.C)",
+            "Commandement Immobilier",
+            "Redressement Judiciaire",
         ];
-        foreach ($models as $model) {
-            LawsuitModel::updateOrCreate(['id'=> $model['id']], $model);
+        foreach ($names as $name) {
+            $procedure=Procedure::where('name', $name)->firstOrFail();
+            $lawsuitModel=LawsuitModel::updateOrCreate(
+            ['procedure_id'=> $procedure->id],
+            [
+                "name"        => $name,
+                'created_at'  => now(),
+                'updated_at'  => now(),
+            ]);
         }
 
     }
